@@ -1,0 +1,29 @@
+<!--meta {"title": "Schema-on-write vs. schema-on-read", "cat": "de", "lede": "Validate and shape data before it's stored (ETL) and consumers get clean tables. Store it raw and shape it later (ELT) and you stay flexible, but every reader pays.", "vs": ["Upfront rigour", "Flexibility"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>With <strong>schema-on-write</strong> (classic ETL), data is checked and transformed <em>before</em> loading. Bad records are caught at the door, and everything in the warehouse is trustworthy, but a new field or a changed source needs pipeline work first.</p>
+  <p>With <strong>schema-on-read</strong> (ELT, data lakes), raw data lands untouched and structure is applied when someone queries it. Ingestion never breaks and history is preserved, but each consumer re-interprets the data, and problems surface later, in someone's dashboard.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Be strict where being wrong is expensive:</strong> finance, compliance and anything that's masked or audited.</li>
+    <li><strong>Be loose where the shape is still changing:</strong> new sources, logs, exploratory work.</li>
+    <li><strong>Layer it.</strong> Land raw data first, then promote it through cleaned and curated layers (bronze, silver, gold), tightening the contract at each step.</li>
+    <li><strong>Keep the raw copy.</strong> If a rule was wrong, you can rebuild without going back to the source.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A source system starts sending prices as text ("12,50") instead of numbers. In an ETL pipeline the load fails at 2 a.m. and the on-call engineer fixes the mapping, so the data is late but right. In an ELT lake the load succeeds, and three weeks later a report shows revenue of zero for one region.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>"Flexible" can become a swamp.</strong> A lake nobody documents is storage, not an asset.</li>
+    <li><strong>Strictness can become a bottleneck.</strong> If every change waits for one team, people go around it.</li>
+    <li>It's a cousin of <a href="normalization.html">normalization vs. denormalization</a> (where does the integrity work happen?) and affects <a href="batch-streaming.html">how fresh</a> your data can be.</li>
+  </ul>
+</section>

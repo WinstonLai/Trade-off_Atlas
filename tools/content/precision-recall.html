@@ -1,0 +1,29 @@
+<!--meta {"title": "Precision vs. recall", "cat": "ds", "lede": "A classifier can catch more of the real cases by flagging more things, but then more of its flags are wrong. Where to set the threshold depends on which mistake costs more.", "vs": ["Precision", "Recall"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p><strong>Precision</strong> asks: of everything flagged, how much was right? <strong>Recall</strong> asks: of everything that was really there, how much did we catch? Most classifiers output a score, and you choose a <strong>threshold</strong> above which you act.</p>
+  <p>Lower the threshold and recall rises (fewer misses) while precision falls (more false alarms). Raise it and the reverse happens. Unless the two score distributions are fully separate, you can't have both at 100%.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Name the costly mistake first.</strong> A missed fraud case, a missed tumour and a spam message in the inbox all hurt in different amounts.</li>
+    <li><strong>Pick the threshold from costs, not from 0.5.</strong> Default thresholds are a convenience, not a decision.</li>
+    <li><strong>Report both numbers</strong> (or a precision-recall curve). Accuracy alone hides the imbalance when positives are rare.</li>
+    <li><strong>Improve the model to move the whole curve.</strong> Moving the threshold only slides you along it.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A screening model for a serious disease should have high recall: a follow-up test for a healthy patient is cheap, a missed case is not. A content filter that auto-deletes posts should favour precision: wrongly removing a legitimate post is the visible, trust-damaging error, and humans can review the borderline cases.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>The base rate.</strong> When positives are rare, even a small false-positive rate can make most flags wrong.</li>
+    <li><strong>A single score hides the choice.</strong> F1 weights the two equally, which is rarely what the business actually wants.</li>
+    <li>Related: <a href="bias-variance.html">bias vs. variance</a> is the trade-off in how the model is built; this one is the trade-off in how you use it.</li>
+  </ul>
+</section>

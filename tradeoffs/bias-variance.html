@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bias vs. variance · Trade-off Atlas</title>
+  <meta name="description" content="A simple model misses the pattern (bias). A flexible one memorises the noise (variance). Error on new data is lowest somewhere in between.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+</head>
+<body class="cat-ds" data-root=".." data-slug="bias-variance">
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3 25 23H3Z" fill="none" stroke="var(--pm)" stroke-width="2.6" stroke-linejoin="round"/><circle cx="14" cy="16" r="3.4" fill="var(--sw)"/></svg>
+        Trade-off Atlas
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="../index.html#pm" class="hide-sm">Projects</a>
+        <a href="../index.html#sw" class="hide-sm">Software</a>
+        <a href="../index.html#de" class="hide-sm">Data</a>
+        <a href="../index.html#bc" class="hide-sm">Communication</a>
+        <a href="../index.html#ds" class="hide-sm">Data science</a>
+        <button class="theme-toggle" type="button" aria-label="Toggle theme"></button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All trade-offs</a> / <a href="../index.html#ds">Data science</a></nav>
+    <header class="hero">
+      <span class="tag">Data science</span>
+      <h1>Bias vs. variance</h1>
+      <p class="lede">A simple model misses the pattern (bias). A flexible one memorises the noise (variance). Error on new data is lowest somewhere in between.</p>
+      <div class="vs"><span>Model complexity</span><i>vs.</i><span>Generalisation</span></div>
+    </header>
+
+    <figure class="anim" id="anim"><noscript><p style="padding:20px">Turn on JavaScript to see the animation.</p></noscript></figure>
+
+    <article class="prose">
+      <section>
+        <h2>The trade-off</h2>
+        <p>Every model's error on <strong>new</strong> data has two sources. <strong>Bias</strong> is the error from assumptions that are too simple: a straight line through a curve is wrong however much data you feed it. <strong>Variance</strong> is the error from being too sensitive to the particular sample: a wiggly curve that passes through every training point changes wildly when the sample changes.</p>
+        <p>Making a model more complex lowers bias and raises variance. Training error keeps falling, but error on unseen data falls and then <strong>climbs again</strong>. That climb is overfitting.</p>
+      </section>
+      <section>
+        <h2>How to use it</h2>
+        <ol>
+          <li><strong>Judge on held-out data.</strong> Training error always flatters a complex model. Use a validation set or cross-validation.</li>
+          <li><strong>Read the gap.</strong> Poor on both train and test means high bias: add features or flexibility. Great on train, poor on test means high variance: simplify, regularise or get more data.</li>
+          <li><strong>Match complexity to data volume.</strong> The sweet spot moves right as you collect more examples.</li>
+          <li><strong>Start simple.</strong> A baseline you can explain tells you how much the extra complexity is actually buying.</li>
+        </ol>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <div class="callout">
+          <p>A team predicts weekly demand from 15 weeks of history. A 9th-degree curve hits every past week exactly and forecasts absurd swings. A straight trend line misses the seasonal bump. A low-degree curve with a seasonal term is slightly wrong everywhere and is the one that holds up next quarter.</p>
+        </div>
+      </section>
+      <section>
+        <h2>Watch out for</h2>
+        <ul>
+          <li><strong>Peeking at the test set.</strong> Tuning against it quietly turns it into training data and hides the variance you built in.</li>
+          <li><strong>The classic U-shape isn't universal.</strong> Very large models trained on huge datasets can behave differently, so measure rather than assume.</li>
+          <li>The same shape appears in <a href="exact-approximate.html">exact vs. approximate</a>: more effort has diminishing returns.</li>
+        </ul>
+      </section>
+    </article>
+
+    <nav class="related" id="related" aria-label="Related trade-offs"></nav>
+    <nav class="pager" id="pager" aria-label="More trade-offs"></nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Trade-off Atlas: mental models for better decisions. Models are simplified on purpose. Use them to frame the conversation, not to forecast.</p></div>
+  </footer>
+
+  <script src="../assets/js/catalog.js"></script>
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/engine.js"></script>
+  <script src="../assets/js/anim/bias-variance.js"></script>
+</body>
+</html>

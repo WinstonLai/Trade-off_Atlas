@@ -7,7 +7,7 @@ import html, json, os, re, sys
 
 here = os.path.dirname(os.path.abspath(__file__))
 root = sys.argv[1]
-CATS = {"pm": "Project management", "sw": "Software development", "de": "Data engineering", "bc": "Business communication"}
+CATS = {"pm": "Project management", "sw": "Software development", "de": "Data engineering", "bc": "Business communication", "ds": "Data science"}
 
 TEMPLATE = """<!doctype html>
 <html lang="en">
@@ -33,6 +33,7 @@ TEMPLATE = """<!doctype html>
         <a href="../index.html#sw" class="hide-sm">Software</a>
         <a href="../index.html#de" class="hide-sm">Data</a>
         <a href="../index.html#bc" class="hide-sm">Communication</a>
+        <a href="../index.html#ds" class="hide-sm">Data science</a>
         <button class="theme-toggle" type="button" aria-label="Toggle theme"></button>
       </nav>
     </div>

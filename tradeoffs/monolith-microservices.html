@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monolith vs. microservices · Trade-off Atlas</title>
+  <meta name="description" content="Splitting a system into services lets teams ship independently, but turns function calls into network calls and in-house problems into distributed ones.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+</head>
+<body class="cat-sw" data-root=".." data-slug="monolith-microservices">
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3 25 23H3Z" fill="none" stroke="var(--pm)" stroke-width="2.6" stroke-linejoin="round"/><circle cx="14" cy="16" r="3.4" fill="var(--sw)"/></svg>
+        Trade-off Atlas
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="../index.html#pm" class="hide-sm">Projects</a>
+        <a href="../index.html#sw" class="hide-sm">Software</a>
+        <a href="../index.html#de" class="hide-sm">Data</a>
+        <a href="../index.html#bc" class="hide-sm">Communication</a>
+        <a href="../index.html#ds" class="hide-sm">Data science</a>
+        <button class="theme-toggle" type="button" aria-label="Toggle theme"></button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All trade-offs</a> / <a href="../index.html#sw">Software development</a></nav>
+    <header class="hero">
+      <span class="tag">Software development</span>
+      <h1>Monolith vs. microservices</h1>
+      <p class="lede">Splitting a system into services lets teams ship independently, but turns function calls into network calls and in-house problems into distributed ones.</p>
+      <div class="vs"><span>Team autonomy</span><i>vs.</i><span>Operational complexity</span></div>
+    </header>
+
+    <figure class="anim" id="anim"><noscript><p style="padding:20px">Turn on JavaScript to see the animation.</p></noscript></figure>
+
+    <article class="prose">
+      <section>
+        <h2>The trade-off</h2>
+        <p>In a <strong>monolith</strong> everything deploys together: simple to run, test and debug, but every change touches the shared whole and teams queue behind each other. With <strong>microservices</strong> each team owns a service and deploys on its own schedule.</p>
+        <p>The price is that every boundary becomes a network hop that can be slow or fail, data is split across stores, and you now need tracing, deployment pipelines and versioned contracts. The benefit grows with the number of teams, while the costs grow with the number of services and the calls between them.</p>
+      </section>
+      <section>
+        <h2>How to use it</h2>
+        <ol>
+          <li><strong>Split to match teams, not diagrams.</strong> Boundaries should follow who owns what (Conway's law), and be stable.</li>
+          <li><strong>Start as a well-structured monolith.</strong> Clear modules are cheap to split later. A wrong service boundary is expensive to move.</li>
+          <li><strong>Count the operational capacity.</strong> Who is on call, who owns the pipeline, who debugs across services?</li>
+          <li><strong>Extract for a reason:</strong> a different scaling profile, a different release pace, or an independent team.</li>
+        </ol>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <div class="callout">
+          <p>A 12-person startup splits its app into nine services "to scale". Now a simple checkout change needs coordinated releases in four repos, and an outage is traced through six hops. Merging back into three coarser services cut incidents by half. Two teams of 40 at a larger company, by contrast, are blocked every week by a shared deployment: for them, splitting pays off.</p>
+        </div>
+      </section>
+      <section>
+        <h2>Watch out for</h2>
+        <ul>
+          <li><strong>The distributed monolith:</strong> services that must still deploy together have the costs of both designs.</li>
+          <li><strong>Network failure is a new category of bug.</strong> See the <a href="cap-theorem.html">CAP theorem</a> for what happens to consistency.</li>
+          <li>It's <a href="brooks-law.html">Brooks's law</a> in architecture form: boundaries reduce the coordination between people, at the price of coordination between systems.</li>
+        </ul>
+      </section>
+    </article>
+
+    <nav class="related" id="related" aria-label="Related trade-offs"></nav>
+    <nav class="pager" id="pager" aria-label="More trade-offs"></nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Trade-off Atlas: mental models for better decisions. Models are simplified on purpose. Use them to frame the conversation, not to forecast.</p></div>
+  </footer>
+
+  <script src="../assets/js/catalog.js"></script>
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/engine.js"></script>
+  <script src="../assets/js/anim/monolith-microservices.js"></script>
+</body>
+</html>

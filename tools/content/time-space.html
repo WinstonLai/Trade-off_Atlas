@@ -1,0 +1,29 @@
+<!--meta {"title": "Time vs. space (caching)", "cat": "sw", "lede": "Spend memory to remember answers and you save the time of computing them again. But each extra byte of cache helps less than the last.", "vs": ["Memory", "Compute time"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>Many programs can trade <strong>space</strong> for <strong>time</strong>: store a result (a cache, an index, a precomputed table) so you don't redo work. A <strong>hit</strong> is fast; a <strong>miss</strong> pays the full cost, plus the cost of filling the cache.</p>
+  <p>Because some items are requested far more often than others, the first slice of cache captures most of the benefit. Doubling the cache from there adds less each time, while memory cost, and the work of keeping the cache fresh, keeps growing linearly.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Measure the access pattern.</strong> Caching helps when a small set of items gets most of the requests, and does little for uniformly random access.</li>
+    <li><strong>Size the cache at the knee</strong> of the hit-rate curve, not at "as big as possible".</li>
+    <li><strong>Decide how stale is acceptable.</strong> Every cache is a copy; set an expiry or an invalidation rule on purpose.</li>
+    <li><strong>Price the miss.</strong> Caching is worth more when the miss is slow or expensive.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A product page query takes 200 ms. Caching the 5% most-viewed products serves 70% of requests in 2 ms and cuts average latency by two thirds. Caching the next 20% of the catalogue costs four times the memory for about 13 points more hit rate.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>Stale data.</strong> "There are only two hard things in computer science: cache invalidation and naming things."</li>
+    <li><strong>Cold starts.</strong> After a deploy or restart the cache is empty and the slow path takes the full load.</li>
+    <li>Compare <a href="exact-approximate.html">exact vs. approximate</a> and <a href="normalization.html">normalization</a>, which trade effort and storage for speed in the same way.</li>
+  </ul>
+</section>

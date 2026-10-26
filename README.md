@@ -1,6 +1,6 @@
 # Trade-off Atlas
 
-Animated mental models of the trade-offs that keep coming up in project management, software development, data engineering and business communication.
+Animated mental models of the trade-offs that keep coming up in project management, software development, data engineering, data science and business communication.
 
 Each trade-off has its own page with an animation that auto-plays a short scenario, sliders to explore it yourself, and a short guide: what pulls against what, how to use it, an example, and what to watch out for.
 
@@ -10,10 +10,11 @@ Each trade-off has its own page with an animation that auto-plays a short scenar
 
 | Category | Trade-offs |
 |---|---|
-| Project management | Project management triangle · Brooks's law · Utilization vs. flow |
-| Software development | Technical debt · CAP theorem · Flexibility vs. simplicity |
-| Data engineering | Batch vs. streaming · Normalization vs. denormalization · Exact vs. approximate |
-| Business communication | Brevity vs. completeness · Speed vs. consensus · Candour vs. diplomacy |
+| Project management | Project management triangle · Brooks's law · Utilization vs. flow · Specialist vs. generalist |
+| Software development | Technical debt · CAP theorem · Flexibility vs. simplicity · Time vs. space (caching) · Monolith vs. microservices |
+| Data engineering | Batch vs. streaming · Normalization vs. denormalization · Exact vs. approximate · Schema-on-write vs. schema-on-read |
+| Business communication | Brevity vs. completeness · Speed vs. consensus · Candour vs. diplomacy · Synchronous vs. asynchronous |
+| Data science | Bias vs. variance · Precision vs. recall · Explore vs. exploit |
 
 ## Run locally
 

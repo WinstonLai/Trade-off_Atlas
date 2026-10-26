@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Normalization vs. denormalization · Trade-off Atlas</title>
+  <meta name="description" content="Store each fact once and keep it consistent, or copy it next to where it&#x27;s read and make queries fast. You&#x27;re trading write integrity against read speed.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+</head>
+<body class="cat-de" data-root=".." data-slug="normalization">
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3 25 23H3Z" fill="none" stroke="var(--pm)" stroke-width="2.6" stroke-linejoin="round"/><circle cx="14" cy="16" r="3.4" fill="var(--sw)"/></svg>
+        Trade-off Atlas
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="../index.html#pm" class="hide-sm">Projects</a>
+        <a href="../index.html#sw" class="hide-sm">Software</a>
+        <a href="../index.html#de" class="hide-sm">Data</a>
+        <a href="../index.html#bc" class="hide-sm">Communication</a>
+        <button class="theme-toggle" type="button" aria-label="Toggle theme"></button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All trade-offs</a> / <a href="../index.html#de">Data engineering</a></nav>
+    <header class="hero">
+      <span class="tag">Data engineering</span>
+      <h1>Normalization vs. denormalization</h1>
+      <p class="lede">Store each fact once and keep it consistent, or copy it next to where it's read and make queries fast. You're trading write integrity against read speed.</p>
+      <div class="vs"><span>Write integrity</span><i>vs.</i><span>Read speed</span></div>
+    </header>
+
+    <figure class="anim" id="anim"><noscript><p style="padding:20px">Turn on JavaScript to see the animation.</p></noscript></figure>
+
+    <article class="prose">
+      <section>
+        <h2>The trade-off</h2>
+        <p>A <strong>normalized</strong> schema stores each fact exactly once: a customer's name lives only in the customers table. Updates are simple and can't contradict each other, but reading anything useful means <strong>joining</strong> tables together.</p>
+        <p>A <strong>denormalized</strong> schema copies facts to where they're needed: each order row carries the customer name. Reads are fast and simple, but every copy must be kept in sync. Storage grows, and a missed update leaves the data contradicting itself.</p>
+      </section>
+      <section>
+        <h2>How to use it</h2>
+        <ol>
+          <li><strong>Check the read/write mix.</strong> Transactional systems (many small writes) lean normalized. Analytics and dashboards (many large reads) lean denormalized.</li>
+          <li><strong>Ask how often the copied fact changes.</strong> Copying something that rarely changes (a country name, the price at time of order) is cheap and safe.</li>
+          <li><strong>Keep one source of truth.</strong> Normalize the system of record, then build denormalized tables or views from it for reading.</li>
+          <li><strong>Automate the copies.</strong> If you denormalize, update copies from a pipeline or trigger, not by hand.</li>
+        </ol>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <div class="callout">
+          <p>An online shop keeps its order database normalized so that addresses and prices stay correct. Every night, a pipeline builds a wide "orders_enriched" table for the analytics team, so dashboards scan one table with no joins and stay fast even over years of data.</p>
+        </div>
+      </section>
+      <section>
+        <h2>Watch out for</h2>
+        <ul>
+          <li><strong>Some copies are actually correct.</strong> The price <em>at the time of the order</em> should be copied, because it must not change when the catalogue does.</li>
+          <li><strong>Modern columnar warehouses</strong> make wide tables cheap, which shifts the balance for analytics.</li>
+          <li>Copies spread across systems bring the same consistency question as <a href="cap-theorem.html">CAP</a>.</li>
+        </ul>
+      </section>
+    </article>
+
+    <nav class="related" id="related" aria-label="Related trade-offs"></nav>
+    <nav class="pager" id="pager" aria-label="More trade-offs"></nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Trade-off Atlas: mental models for better decisions. Models are simplified on purpose. Use them to frame the conversation, not to forecast.</p></div>
+  </footer>
+
+  <script src="../assets/js/catalog.js"></script>
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/engine.js"></script>
+  <script src="../assets/js/anim/normalization.js"></script>
+</body>
+</html>

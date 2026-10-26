@@ -1,0 +1,29 @@
+<!--meta {"title": "Utilization vs. flow", "cat": "pm", "lede": "A team that is 100% busy cannot respond. As utilization climbs past roughly 80%, waiting time doesn't rise gently. It explodes.", "vs": ["Utilization", "Responsiveness"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>Managers often aim for full utilization, so that nobody is idle. But work doesn't arrive evenly. When a team has no slack, every surprise joins a <strong>queue</strong>. Queueing theory (Kingman's formula) shows that waiting time grows roughly with <strong>u / (1 − u)</strong>: going from 50% to 90% busy doesn't double the wait, it multiplies it by nine.</p>
+  <p>The more <strong>variable</strong> the work (unclear sizes, interruptions, urgent requests), the earlier the curve bends. Slack isn't waste. It's what lets the system flow.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Decide which you're optimizing:</strong> busy people or fast delivery. Measure lead time (request to done), not only how busy people are.</li>
+    <li><strong>Plan for 70–80% capacity.</strong> Leave room for support, bugs and the unexpected.</li>
+    <li><strong>Limit work in progress.</strong> Finishing before starting shrinks the queue directly.</li>
+    <li><strong>Reduce variability:</strong> split large tasks, standardize recurring ones, and protect the team from interruptions.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A data team runs at "full capacity" and everyone's calendar is packed. A simple dashboard request takes six weeks, not because it's hard but because it waits behind everything else. Reserving 20% of each sprint for incoming requests cuts the typical turnaround to days, even though the planned roadmap delivers slightly less.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>Busy ≠ productive.</strong> High utilization can hide very slow delivery.</li>
+    <li><strong>The 80% line is a rule of thumb.</strong> The real knee depends on how variable your work is.</li>
+    <li>It applies to machines too: servers, databases and pipelines near 100% CPU show the same latency spike. See <a href="batch-streaming.html">batch vs. streaming</a>.</li>
+  </ul>
+</section>

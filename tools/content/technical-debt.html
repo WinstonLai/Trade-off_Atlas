@@ -1,0 +1,29 @@
+<!--meta {"title": "Technical debt", "cat": "sw", "lede": "A shortcut is a loan. You get speed today and pay interest on every future change until you pay back the principal.", "vs": ["Speed now", "Speed later"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>Skipping tests, copy-pasting code or hard-coding a value gets a feature out sooner. That's the <strong>principal</strong> you borrowed. Afterwards, every change that touches that code takes longer, breaks more easily and needs more explaining. That's the <strong>interest</strong>.</p>
+  <p>Debt isn't automatically bad. Like a financial loan, it's worth taking when the payoff comes before the interest piles up: a prototype, a market window, a demo. It becomes a problem when it's <strong>unintentional</strong> or <strong>never repaid</strong>.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Ask about the horizon.</strong> Will this code live for two weeks or two years? The longer it lives, the costlier the shortcut.</li>
+    <li><strong>Make debt deliberate.</strong> If you take a shortcut, write it down: what was skipped, why, and when it will be fixed.</li>
+    <li><strong>Pay interest continuously.</strong> Reserve a steady share of each iteration (often 10–20%) for refactoring and clean-up.</li>
+    <li><strong>Pay down where it hurts.</strong> Prioritize debt in code that changes often. Messy code nobody touches costs little.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A startup hard-codes pricing rules to launch before a conference, which is a sensible loan. Six months later, every pricing change takes a week and causes bugs. The team spends two sprints extracting pricing into configuration, and changes drop to an afternoon.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>"We'll fix it later" rarely happens</strong> unless the time is actually set aside.</li>
+    <li><strong>Debt is invisible to non-engineers.</strong> Translate it into delivery speed ("features now take 2× longer") to get time to repay it.</li>
+    <li>The opposite trap is over-engineering for a future that never comes. See <a href="flexibility-simplicity.html">flexibility vs. simplicity</a>.</li>
+  </ul>
+</section>

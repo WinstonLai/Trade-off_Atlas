@@ -1,0 +1,29 @@
+<!--meta {"title": "Batch vs. streaming", "cat": "de", "lede": "The fresher your data, the more you pay to run it and the more edge cases you must handle. Choose the freshness the decision actually needs.", "vs": ["Freshness", "Cost & complexity"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p><strong>Batch</strong> processing collects data and handles it on a schedule: nightly, hourly, every few minutes. It's cheap, easy to rerun and easy to reason about, but the data is only as fresh as the last run.</p>
+  <p><strong>Streaming</strong> processes each event as it arrives. Data is fresh within seconds, but the infrastructure runs nonstop, and you must handle events that arrive late, twice or out of order. Monitoring, testing and backfilling all get harder.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Start from the decision, not the technology.</strong> Who acts on this data, and how quickly can they react? A weekly business review doesn't need second-level freshness.</li>
+    <li><strong>Price the freshness.</strong> Compare the value of acting sooner (fraud stopped, stock-outs avoided) with the extra running and engineering cost.</li>
+    <li><strong>Try the smallest batch that's fresh enough.</strong> Micro-batches (every 5–15 minutes) cover most "real-time" requests.</li>
+    <li><strong>Mix where needed.</strong> Stream the few signals that need it, and batch the rest.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>Marketing asks for a "real-time" campaign dashboard. Asking how it's used reveals that the team checks it twice a day to adjust budgets. An hourly batch job delivers that at a fraction of the cost of a streaming pipeline. Meanwhile, fraud scoring on payments runs as a stream, because seconds matter there.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>"Real-time" means different things to different people.</strong> Pin down an actual number of seconds, minutes or hours.</li>
+    <li><strong>Streaming is a commitment.</strong> It needs on-call support and careful handling of state.</li>
+    <li>Pipelines running near full capacity build up lag. See <a href="utilization-flow.html">utilization vs. flow</a>.</li>
+  </ul>
+</section>

@@ -1,0 +1,29 @@
+<!--meta {"title": "Exact vs. approximate", "cat": "de", "lede": "Precision has diminishing returns. Error shrinks with the square root of the data, so 4× the compute only halves it.", "vs": ["Accuracy", "Compute & speed"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>Scanning every row gives the exact answer, but costs time and money in proportion to the data. A <strong>sample</strong>, or an approximate algorithm (HyperLogLog for distinct counts, t-digest for percentiles), gets close for a fraction of the cost.</p>
+  <p>Statistical error falls with <strong>1/√n</strong>. The first few thousand rows buy most of the precision. After that, each extra decimal place costs far more compute than the one before.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Ask what precision the decision needs.</strong> If you'd act the same way whether the answer is 39% or 41%, ±1 point is plenty.</li>
+    <li><strong>Separate exploring from reporting.</strong> Use samples and approximations while exploring, and exact numbers for finance, billing and compliance.</li>
+    <li><strong>Always show the error bar.</strong> An approximate number with an honest ± is more useful than a "precise" one nobody trusts.</li>
+    <li><strong>Watch rare segments.</strong> Small groups need bigger samples (or stratified sampling) to be estimated well.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>An analyst wants to check whether a new checkout flow changed conversion. A 1% sample of a billion events answers in seconds with well under ±0.1 points of error, plenty to see a 2-point lift. The full scan would take 40 minutes on an expensive cluster and move the answer by a hundredth of a percent.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>Sampling error isn't the only error.</strong> A biased sample (for example, only weekday data) is precisely wrong.</li>
+    <li><strong>Money must add up.</strong> Invoices, balances and audits need exact sums.</li>
+    <li>Approximate answers also come faster, which links this trade-off to <a href="batch-streaming.html">batch vs. streaming</a>.</li>
+  </ul>
+</section>

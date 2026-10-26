@@ -1,0 +1,29 @@
+<!--meta {"title": "Normalization vs. denormalization", "cat": "de", "lede": "Store each fact once and keep it consistent, or copy it next to where it's read and make queries fast. You're trading write integrity against read speed.", "vs": ["Write integrity", "Read speed"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>A <strong>normalized</strong> schema stores each fact exactly once: a customer's name lives only in the customers table. Updates are simple and can't contradict each other, but reading anything useful means <strong>joining</strong> tables together.</p>
+  <p>A <strong>denormalized</strong> schema copies facts to where they're needed: each order row carries the customer name. Reads are fast and simple, but every copy must be kept in sync. Storage grows, and a missed update leaves the data contradicting itself.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Check the read/write mix.</strong> Transactional systems (many small writes) lean normalized. Analytics and dashboards (many large reads) lean denormalized.</li>
+    <li><strong>Ask how often the copied fact changes.</strong> Copying something that rarely changes (a country name, the price at time of order) is cheap and safe.</li>
+    <li><strong>Keep one source of truth.</strong> Normalize the system of record, then build denormalized tables or views from it for reading.</li>
+    <li><strong>Automate the copies.</strong> If you denormalize, update copies from a pipeline or trigger, not by hand.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>An online shop keeps its order database normalized so that addresses and prices stay correct. Every night, a pipeline builds a wide "orders_enriched" table for the analytics team, so dashboards scan one table with no joins and stay fast even over years of data.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>Some copies are actually correct.</strong> The price <em>at the time of the order</em> should be copied, because it must not change when the catalogue does.</li>
+    <li><strong>Modern columnar warehouses</strong> make wide tables cheap, which shifts the balance for analytics.</li>
+    <li>Copies spread across systems bring the same consistency question as <a href="cap-theorem.html">CAP</a>.</li>
+  </ul>
+</section>

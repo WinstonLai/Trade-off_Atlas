@@ -47,4 +47,16 @@ tools/content/<slug>.html  Written content for each trade-off page
 3. Write `assets/js/anim/<slug>.js`, using an existing animation as a template. A spec lists the variables (sliders or choices), an optional `relate` function that rebalances them, a `scenario` of captioned keyframes, and a `setup` that draws the SVG.
 4. Run `python3 tools/gen.py .` to regenerate the pages.
 
+Keep a category's entries together in `catalog.js` (the prev/next pager follows array order), and add the new slug to the `related` list of one or two existing entries so it is linked both ways.
+
+### Adding a category
+
+Update all of these, then re-run `tools/gen.py`:
+
+- `window.CATEGORIES` in `assets/js/catalog.js`
+- `CATS` and the header nav links in `tools/gen.py`
+- the header nav links in `index.html`
+- an accent colour `--<id>` in each of the three theme blocks of `assets/css/site.css`, plus a `.cat-<id>` rule
+- the category table above
+
 The models are simplified on purpose. They are for framing a decision, not for forecasting.

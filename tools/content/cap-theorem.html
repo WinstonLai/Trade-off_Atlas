@@ -1,0 +1,33 @@
+<!--meta {"title": "CAP theorem", "cat": "sw", "lede": "When the network between copies of your data breaks, you must choose: refuse requests to stay correct, or keep answering and risk stale data.", "vs": ["Consistency", "Availability"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>A distributed system keeps copies of data on several machines. The CAP theorem says that during a <strong>network partition</strong> (P), when the machines can't talk to each other, you can't have both:</p>
+  <ul>
+    <li><strong>Consistency (C):</strong> every read sees the latest write, or gets an error.</li>
+    <li><strong>Availability (A):</strong> every request gets a non-error response, even if it may be out of date.</li>
+  </ul>
+  <p>Partitions will happen in any real network, so the practical question is <strong>what your system does when one occurs</strong>.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Ask what a wrong answer costs.</strong> A double-spent bank balance or an oversold seat is expensive, so lean CP. A slightly stale like count or product review is harmless, so lean AP.</li>
+    <li><strong>Decide per feature, not per system.</strong> Checkout can be CP while the product catalogue is AP.</li>
+    <li><strong>Plan the reconciliation.</strong> If you choose AP, decide how conflicting writes merge when the partition heals (last write wins, merge, or ask the user).</li>
+    <li><strong>Remember the everyday version.</strong> Even with no partition, stronger consistency usually costs latency (PACELC).</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>An e-commerce site stores shopping carts in an AP store: a cart is always writable, and duplicate items are merged later. Inventory reservations and payments go through a CP database that refuses the order rather than selling stock it can't confirm.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>"Pick two of three" is misleading.</strong> You can't opt out of partitions. The choice only matters while one is happening.</li>
+    <li><strong>It's a spectrum.</strong> Many databases let you tune consistency per query (quorum reads, read-your-writes).</li>
+    <li>The same tension shows up in data modelling. See <a href="normalization.html">normalization vs. denormalization</a>.</li>
+  </ul>
+</section>

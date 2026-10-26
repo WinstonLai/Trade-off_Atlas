@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trade-off Atlas</title>
+  <meta name="description" content="Animated mental models of the trade-offs that come up in project management, software, data engineering and business communication.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+</head>
+<body data-root=".">
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3 25 23H3Z" fill="none" stroke="var(--pm)" stroke-width="2.6" stroke-linejoin="round"/><circle cx="14" cy="16" r="3.4" fill="var(--sw)"/></svg>
+        Trade-off Atlas
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html#pm" class="hide-sm">Projects</a>
+        <a href="index.html#sw" class="hide-sm">Software</a>
+        <a href="index.html#de" class="hide-sm">Data</a>
+        <a href="index.html#bc" class="hide-sm">Communication</a>
+        <button class="theme-toggle" type="button" aria-label="Toggle theme"></button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="home-hero">
+      <h1>Every decision is a <em>trade-off</em>. See the forces before you choose.</h1>
+      <p>A visual collection of the trade-offs that keep coming up in projects, software, data and communication. Each one comes with an animation that shows how the factors push against each other, and a short guide to using it in your next decision.</p>
+    </section>
+
+    <div class="toolbar">
+      <input id="search" class="search" type="search" placeholder="Search trade-offs (press /)" aria-label="Search trade-offs">
+      <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
+    </div>
+
+    <div id="home-grid"></div>
+
+    <section class="about" id="about">
+      <h2>How to use these models</h2>
+      <p><strong>Name the factors.</strong> Most arguments about plans are really arguments about which factor gets to move. Saying "we're holding the deadline fixed" makes the conversation honest.</p>
+      <p><strong>Decide what's locked.</strong> Each animation lets you hold one factor constant and watch the others react. In a real decision, agree on what's fixed before debating the rest.</p>
+      <p><strong>Look for the curve.</strong> Many trade-offs aren't linear. Waiting time, coordination cost and precision all have a knee where a little more of one thing costs a lot more of another.</p>
+      <p>These are simplified models for framing a decision, not precise forecasts. Use them to ask better questions.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Trade-off Atlas: mental models for better decisions.</p></div>
+  </footer>
+
+  <script src="assets/js/catalog.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>

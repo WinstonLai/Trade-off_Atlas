@@ -1,0 +1,29 @@
+<!--meta {"title": "Flexibility vs. simplicity", "cat": "sw", "lede": "Every abstraction is a bet on the future. It makes the change you predicted cheaper and everything else a little harder to understand.", "vs": ["Flexibility", "Simplicity"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>Interfaces, plugin systems and configuration layers let code adapt without rewrites. But each layer is something every future reader has to understand, and something every <strong>unpredicted</strong> change has to work around.</p>
+  <p>Whether a layer pays off depends on <strong>how likely the predicted change really is</strong>. "You aren't gonna need it" (YAGNI) is a reminder that most predicted changes never happen, and the ones that do often arrive in a shape nobody expected.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Name the change the abstraction is for.</strong> "So we can swap payment providers." If you can't name one, you probably don't need the layer.</li>
+    <li><strong>Estimate its likelihood and timing.</strong> Is there a real second use case today, or a hypothetical one in some future year?</li>
+    <li><strong>Wait for the second, or even third, example.</strong> Duplicate once, then abstract when the pattern is real (the "rule of three").</li>
+    <li><strong>Prefer abstractions that are easy to remove</strong> over ones that are hard to add later, and the other way round for public APIs.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A team wraps their only database in a generic repository layer "in case we switch to NoSQL". Three years later they never switched, but every new query has to be squeezed through the generic interface, and the database's best features are unusable. Meanwhile, a second payments provider was added in a week because that integration was abstracted only once a second provider was actually signed.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>Some boundaries are worth it early:</strong> public APIs, data formats and security boundaries are expensive to change later.</li>
+    <li><strong>Simplicity isn't the same as no structure.</strong> Clear naming and small functions cost almost nothing and help every change.</li>
+    <li>Under-designing has its own costs. See <a href="technical-debt.html">technical debt</a>.</li>
+  </ul>
+</section>

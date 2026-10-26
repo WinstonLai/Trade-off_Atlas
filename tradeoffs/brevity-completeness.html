@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brevity vs. completeness · Trade-off Atlas</title>
+  <meta name="description" content="Every sentence you add covers one more detail and loses some readers. The best message is as short as the audience allows, and no shorter.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+</head>
+<body class="cat-bc" data-root=".." data-slug="brevity-completeness">
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3 25 23H3Z" fill="none" stroke="var(--pm)" stroke-width="2.6" stroke-linejoin="round"/><circle cx="14" cy="16" r="3.4" fill="var(--sw)"/></svg>
+        Trade-off Atlas
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="../index.html#pm" class="hide-sm">Projects</a>
+        <a href="../index.html#sw" class="hide-sm">Software</a>
+        <a href="../index.html#de" class="hide-sm">Data</a>
+        <a href="../index.html#bc" class="hide-sm">Communication</a>
+        <button class="theme-toggle" type="button" aria-label="Toggle theme"></button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All trade-offs</a> / <a href="../index.html#bc">Business communication</a></nav>
+    <header class="hero">
+      <span class="tag">Business communication</span>
+      <h1>Brevity vs. completeness</h1>
+      <p class="lede">Every sentence you add covers one more detail and loses some readers. The best message is as short as the audience allows, and no shorter.</p>
+      <div class="vs"><span>Brevity</span><i>vs.</i><span>Completeness</span></div>
+    </header>
+
+    <figure class="anim" id="anim"><noscript><p style="padding:20px">Turn on JavaScript to see the animation.</p></noscript></figure>
+
+    <article class="prose">
+      <section>
+        <h2>The trade-off</h2>
+        <p>A longer message can answer more questions in advance: background, options, risks. But attention is limited. With every paragraph, fewer people read to the end, and the key point gets buried.</p>
+        <p>What a message achieves is roughly <strong>what it covers × how many people actually take it in</strong>. That peaks somewhere in the middle, and where depends on how much your <strong>audience already knows</strong>.</p>
+      </section>
+      <section>
+        <h2>How to use it</h2>
+        <ol>
+          <li><strong>Lead with the bottom line.</strong> State the decision, ask or conclusion in the first sentence (BLUF: bottom line up front). Readers who stop early still get it.</li>
+          <li><strong>Write for a specific reader.</strong> What do they already know? Cut anything they don't need in order to act.</li>
+          <li><strong>Layer the detail.</strong> Short summary first, then supporting points, then links or appendices for those who want depth.</li>
+          <li><strong>Test it:</strong> could someone act correctly after reading only the first two lines?</li>
+        </ol>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <div class="callout">
+          <p><strong>Before:</strong> a 900-word update describing the week's investigation, with the request to approve a budget increase in paragraph seven.</p>
+          <p><strong>After:</strong> "Please approve +$4k for extra API capacity by Friday. Without it, the launch slips two weeks. Details below." Same facts, but the decision now happens the same day.</p>
+        </div>
+      </section>
+      <section>
+        <h2>Watch out for</h2>
+        <ul>
+          <li><strong>Too short creates follow-up questions</strong>, and the back-and-forth costs more than a longer first message would have.</li>
+          <li><strong>Different channels, different lengths.</strong> A chat message, an email and a design document each have a different sweet spot.</li>
+          <li>How you say it matters as much as how much. See <a href="candour-diplomacy.html">candour vs. diplomacy</a>.</li>
+        </ul>
+      </section>
+    </article>
+
+    <nav class="related" id="related" aria-label="Related trade-offs"></nav>
+    <nav class="pager" id="pager" aria-label="More trade-offs"></nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Trade-off Atlas: mental models for better decisions. Models are simplified on purpose. Use them to frame the conversation, not to forecast.</p></div>
+  </footer>
+
+  <script src="../assets/js/catalog.js"></script>
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/engine.js"></script>
+  <script src="../assets/js/anim/brevity-completeness.js"></script>
+</body>
+</html>

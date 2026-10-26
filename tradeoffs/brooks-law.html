@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brooks&#x27;s law · Trade-off Atlas</title>
+  <meta name="description" content="Adding people to a late software project makes it later. Headcount grows linearly, but the conversations needed to stay aligned grow with the square.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+</head>
+<body class="cat-pm" data-root=".." data-slug="brooks-law">
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3 25 23H3Z" fill="none" stroke="var(--pm)" stroke-width="2.6" stroke-linejoin="round"/><circle cx="14" cy="16" r="3.4" fill="var(--sw)"/></svg>
+        Trade-off Atlas
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="../index.html#pm" class="hide-sm">Projects</a>
+        <a href="../index.html#sw" class="hide-sm">Software</a>
+        <a href="../index.html#de" class="hide-sm">Data</a>
+        <a href="../index.html#bc" class="hide-sm">Communication</a>
+        <button class="theme-toggle" type="button" aria-label="Toggle theme"></button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All trade-offs</a> / <a href="../index.html#pm">Project management</a></nav>
+    <header class="hero">
+      <span class="tag">Project management</span>
+      <h1>Brooks&#x27;s law</h1>
+      <p class="lede">Adding people to a late software project makes it later. Headcount grows linearly, but the conversations needed to stay aligned grow with the square.</p>
+      <div class="vs"><span>Team size</span><i>vs.</i><span>Coordination cost</span></div>
+    </header>
+
+    <figure class="anim" id="anim"><noscript><p style="padding:20px">Turn on JavaScript to see the animation.</p></noscript></figure>
+
+    <article class="prose">
+      <section>
+        <h2>The trade-off</h2>
+        <p>Each person adds capacity, but also adds <strong>communication channels</strong>: a team of <em>n</em> has n(n−1)/2 possible pairs. Five people have 10 channels. Fifteen have 105. Meetings, hand-offs and misunderstandings all scale with those channels, not with headcount.</p>
+        <p>On a project that's already running, new people also need <strong>ramp-up time</strong>, and that time comes from the experienced people who would otherwise be shipping. In the short term, help can subtract.</p>
+      </section>
+      <section>
+        <h2>How to use it</h2>
+        <ol>
+          <li><strong>Before adding people, ask whether the work can be split.</strong> Work that divides into independent pieces (separate services, separate markets) scales well. Tightly coupled work doesn't.</li>
+          <li><strong>Count the ramp-up.</strong> Estimate how many weeks until a new person is net positive, and who mentors them in the meantime.</li>
+          <li><strong>Keep teams small, connect them lightly.</strong> Several 4–7 person teams with clear interfaces beat one 20-person team.</li>
+          <li><strong>Consider the alternatives:</strong> cut scope, move the date, or remove blockers for the people already there.</li>
+        </ol>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <div class="callout">
+          <p>A migration is three weeks behind. Management offers five contractors. The lead estimates two weeks of onboarding each, using up most of the senior engineers' time, so the project slips further. They take two contractors for isolated, well-defined tasks (test data, documentation) and cut one non-critical integration instead.</p>
+        </div>
+      </section>
+      <section>
+        <h2>Watch out for</h2>
+        <ul>
+          <li><strong>It's not "never hire".</strong> Adding people early, to work that divides cleanly, works fine. The law is about late, entangled work.</li>
+          <li><strong>Tools change the slope.</strong> Good documentation, modular architecture and async communication reduce the cost per channel.</li>
+          <li>See also the <a href="project-triangle.html">project management triangle</a>. "Add cost to save time" assumes cost turns into speed, which this law questions.</li>
+        </ul>
+      </section>
+    </article>
+
+    <nav class="related" id="related" aria-label="Related trade-offs"></nav>
+    <nav class="pager" id="pager" aria-label="More trade-offs"></nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Trade-off Atlas: mental models for better decisions. Models are simplified on purpose. Use them to frame the conversation, not to forecast.</p></div>
+  </footer>
+
+  <script src="../assets/js/catalog.js"></script>
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/engine.js"></script>
+  <script src="../assets/js/anim/brooks-law.js"></script>
+</body>
+</html>

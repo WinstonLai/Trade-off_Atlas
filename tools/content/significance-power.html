@@ -1,0 +1,29 @@
+<!--meta {"title": "Significance vs. power (Type I vs. Type II errors)", "cat": "ds", "lede": "A statistical test can wrongly report an effect that isn't there, or miss one that is. Making it stricter against the first makes it more likely to commit the second, unless you collect more data.", "vs": ["False alarms (Type I)", "Missed effects (Type II)"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>A hypothesis test compares what you measured with what you'd expect if nothing were going on. The <strong>significance level (α)</strong> is how often you accept raising a false alarm: calling an effect real when it's only noise (a <strong>Type I error</strong>). <strong>Power</strong> is the chance of detecting an effect that really exists. Its complement, β, is a <strong>Type II error</strong>: a real effect that you miss.</p>
+  <p>Both errors come from the same overlap between two distributions of results. The decision line that cuts the overlap trades one area for the other: move it right to cut false alarms and you miss more real effects. Only two things shrink the overlap itself: a <strong>bigger sample</strong> (the curves get narrower in proportion to 1/√n, so four times the data halves the spread) or a <strong>bigger true effect</strong>.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Decide the smallest effect that matters</strong> before the experiment. Power only makes sense relative to an effect size.</li>
+    <li><strong>Set α from the cost of a false alarm</strong>, and power from the cost of a miss. 5% and 80% are conventions, not laws.</li>
+    <li><strong>Calculate the sample size up front</strong> (a power analysis), not after seeing the data.</li>
+    <li><strong>Report the effect size and its interval,</strong> not just "significant" or "not significant".</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A team tests a checkout change that is expected to lift conversion by a small amount. With a few hundred visitors per arm the test has about 30% power: even if the change works, it will usually come out "not significant", and the team abandons a good idea. After a power calculation, they run it for three weeks to reach 80% power. A drug trial for a rare side effect takes the opposite stance, accepting more false alarms (higher α) because missing a real harm is the costlier error.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>"Not significant" is not "no effect".</strong> With low power, it mostly means the test couldn't tell.</li>
+    <li><strong>Many tests, many chances.</strong> Run twenty tests at 5% and one will probably look significant by luck. Peeking at results and stopping early inflates α as well.</li>
+    <li>Related: <a href="precision-recall.html">precision vs. recall</a> has the same shape for a classifier's threshold; here the two errors belong to a decision rule applied to an experiment. See also <a href="exact-approximate.html">exact vs. approximate</a> for the 1/√n law of diminishing returns.</li>
+  </ul>
+</section>

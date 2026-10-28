@@ -114,7 +114,7 @@ window.CATALOG = [
   {
     slug: "exact-approximate", cat: "de", title: "Exact vs. approximate",
     summary: "More data buys more precision, but with diminishing returns. 4× the compute only halves the error.",
-    factors: ["Accuracy", "Compute", "Speed"], related: ["batch-streaming", "bias-variance", "brevity-completeness"],
+    factors: ["Accuracy", "Compute", "Speed"], related: ["batch-streaming", "bias-variance", "privacy-utility"],
     glyph: '<path d="M6 30h44" stroke="currentColor" stroke-width="2" opacity=".4"/><rect x="14" y="22" width="28" height="16" rx="3" fill="currentColor" fill-opacity=".15"/><path d="M28 14v32" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="28" cy="30" r="4.5" fill="currentColor"/>'
   },
   {
@@ -186,13 +186,13 @@ window.CATALOG = [
   {
     slug: "bias-variance", cat: "ds", title: "Bias vs. variance",
     summary: "A simple model misses the pattern. A flexible one memorises the noise. Error on new data is lowest in between.",
-    factors: ["Model complexity", "Generalisation", "Data volume"], related: ["exact-approximate", "precision-recall", "flexibility-simplicity"],
+    factors: ["Model complexity", "Generalisation", "Data volume"], related: ["accuracy-interpretability", "precision-recall", "flexibility-simplicity"],
     glyph: '<path d="M6 44C14 40 20 14 28 24S44 8 50 12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><g fill="currentColor"><circle cx="11" cy="40" r="3.2"/><circle cx="22" cy="22" r="3.2"/><circle cx="33" cy="28" r="3.2"/><circle cx="44" cy="12" r="3.2"/></g>'
   },
   {
     slug: "precision-recall", cat: "ds", title: "Precision vs. recall",
     summary: "Flag more and you catch more real cases, but more of your flags are wrong. Where to draw the line depends on which mistake costs more.",
-    factors: ["Precision", "Recall", "Cost of errors"], related: ["bias-variance", "exact-approximate", "speed-consensus"],
+    factors: ["Precision", "Recall", "Cost of errors"], related: ["bias-variance", "exact-approximate", "significance-power"],
     glyph: '<path d="M3 46C9 46 12 12 19 12S29 46 36 46" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M20 46C26 46 29 24 36 24S46 46 53 46" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".6"/><path d="M30 6v44" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>'
   },
   {
@@ -200,5 +200,23 @@ window.CATALOG = [
     summary: "Keep pulling the arm that looks best, or try another that might be better? Exploring costs reward today. Never exploring locks in a guess.",
     factors: ["Exploration", "Short-term reward", "Time left"], related: ["bias-variance", "speed-consensus", "technical-debt"],
     glyph: '<path d="M28 50V30M28 30 10 14M28 30 46 14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".55"/><path d="M28 30V10" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><g fill="currentColor"><circle cx="10" cy="14" r="4"/><circle cx="46" cy="14" r="4"/><circle cx="28" cy="8" r="5"/></g>'
+  },
+  {
+    slug: "significance-power", cat: "ds", title: "Significance vs. power (Type I vs. II errors)",
+    summary: "A test can raise a false alarm or miss a real effect. Making it stricter against one makes the other more likely, unless you collect more data.",
+    factors: ["False alarms", "Missed effects", "Sample size"], related: ["precision-recall", "bias-variance", "exact-approximate"],
+    glyph: '<path d="M28 38 20 50h16Z" fill="currentColor"/><path d="M6 36 50 22" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><circle cx="8" cy="30" r="6" fill="currentColor" fill-opacity=".2" stroke="currentColor" stroke-width="2.5"/><circle cx="48" cy="16" r="6" fill="currentColor"/>'
+  },
+  {
+    slug: "privacy-utility", cat: "ds", title: "Privacy vs. utility (differential privacy)",
+    summary: "Adding noise hides any one person but blurs the result. The amount of noise is a dial between privacy and accuracy.",
+    factors: ["Privacy", "Accuracy", "Noise"], related: ["exact-approximate", "significance-power", "bias-variance"],
+    glyph: '<circle cx="28" cy="20" r="9" fill="currentColor"/><path d="M10 50c0-11 8-17 18-17s18 6 18 17Z" fill="currentColor"/><circle cx="28" cy="30" r="25" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="2 5" stroke-linecap="round" opacity=".6"/>'
+  },
+  {
+    slug: "accuracy-interpretability", cat: "ds", title: "Accuracy vs. interpretability",
+    summary: "Flexible models predict better but are harder to explain. How much that matters depends on the stakes of the decision.",
+    factors: ["Accuracy", "Explainability", "Stakes"], related: ["bias-variance", "flexibility-simplicity", "jargon-plain-language"],
+    glyph: '<rect x="4" y="12" width="24" height="32" rx="3.5" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 22h12M10 30h12M10 38h7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".6"/><rect x="32" y="12" width="20" height="32" rx="3.5" fill="currentColor"/>'
   }
 ];

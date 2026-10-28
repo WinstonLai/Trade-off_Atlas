@@ -37,18 +37,12 @@
     paintToggle();
   }
 
-  // ---- Home: grouped grid, filter chips, search ----
+  // ---- Home: grouped grid, hash filter, search ----
   var home = document.getElementById("home-grid");
   if (home) {
-    var chipsEl = document.getElementById("chips");
     var search = document.getElementById("search");
     var active = (location.hash || "").replace("#", "");
     if (!cats[active]) active = "all";
-
-    chipsEl.innerHTML = '<button class="chip" data-cat="all">All</button>' +
-      window.CATEGORIES.map(function (c) {
-        return '<button class="chip cat-' + c.id + '" data-cat="' + c.id + '"><span class="dot"></span>' + esc(c.name) + "</button>";
-      }).join("");
 
     home.innerHTML = window.CATEGORIES.map(function (c) {
       var items = window.CATALOG.filter(function (t) { return t.cat === c.id; });
@@ -60,9 +54,6 @@
     var render = function () {
       var q = (search.value || "").trim().toLowerCase();
       var any = false;
-      chipsEl.querySelectorAll(".chip").forEach(function (b) {
-        b.setAttribute("aria-pressed", String(b.getAttribute("data-cat") === active));
-      });
       home.querySelectorAll(".cat-section").forEach(function (sec) {
         var catOk = active === "all" || sec.getAttribute("data-cat") === active;
         var shown = 0;
@@ -80,13 +71,6 @@
       document.getElementById("empty").hidden = any;
     };
 
-    chipsEl.addEventListener("click", function (e) {
-      var b = e.target.closest(".chip");
-      if (!b) return;
-      active = b.getAttribute("data-cat");
-      try { history.replaceState(null, "", active === "all" ? location.pathname : "#" + active); } catch (err) {}
-      render();
-    });
     search.addEventListener("input", render);
     window.addEventListener("hashchange", function () {
       var h = location.hash.replace("#", "");

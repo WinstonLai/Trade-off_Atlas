@@ -1,0 +1,29 @@
+<!--meta {"title": "Commit early vs. keep options open", "cat": "pm", "lede": "Waiting gives you better information but costs time, and deciding now gets things moving but risks being wrong. How long to wait depends on how expensive it would be to undo the decision.", "vs": ["Commit early", "Keep options open"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>Early in a project you know the least, and the range of what might turn out to be true is widest. Every week of evidence narrows it, so <strong>waiting reduces the expected cost of being wrong</strong>. But waiting also has a price: people are idle, a market window closes, dependent work stalls. The <strong>last responsible moment</strong> is the point at which the next day of delay costs more than the next day of learning is worth.</p>
+  <p>What moves that point most is <strong>reversibility</strong>. A choice you can cheaply undo (a copy change, an internal tool, a feature flag) should be made quickly and corrected from feedback. A choice that is expensive to unwind (a database vendor, a public API, a hire, a lease) justifies waiting longer and gathering more evidence first. Real-options thinking says the same: keeping a choice open has value, but only while it's cheaper than the information it buys.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Sort the decision.</strong> Ask: if we are wrong, what does it cost to change course? Easy to undo means decide now.</li>
+    <li><strong>Name what you are waiting for.</strong> If no specific fact or event will change your mind, more waiting buys nothing.</li>
+    <li><strong>Put a date on it.</strong> A decision deadline turns "keep options open" into a plan rather than drift.</li>
+    <li><strong>Make hard decisions easier to reverse.</strong> An abstraction layer, a pilot or a short contract moves the decision down the curve.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A team has to pick a data platform it will build on for years. Rather than choose in week one, it spends three weeks on a small proof of concept with its real workload. That costs a little schedule, but removes the biggest unknown. The same team picks its internal naming convention in a ten-minute chat, because renaming later is a find-and-replace.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>Deferring as avoidance.</strong> Postponing a decision can be a way to avoid ownership. If the evidence won't improve, the wait is pure cost.</li>
+    <li><strong>Everything feeling irreversible.</strong> People often overrate how hard a change would be to undo and so over-analyse small choices.</li>
+    <li>Related: <a href="speed-consensus.html">speed vs. consensus</a> asks <em>who</em> to involve in a decision, this asks <em>when</em> to make it. The same reversibility test applies to both.</li>
+  </ul>
+</section>

@@ -24,7 +24,7 @@ window.CATALOG = [
   {
     slug: "utilization-flow", cat: "pm", title: "Utilization vs. flow",
     summary: "Keeping everyone 100% busy makes queues, and waiting time, explode.",
-    factors: ["Utilization", "Wait time", "Responsiveness"], related: ["brooks-law", "batch-streaming", "specialist-generalist"],
+    factors: ["Utilization", "Wait time", "Responsiveness"], related: ["brooks-law", "wip-focus", "specialist-generalist"],
     glyph: '<path d="M6 48h44" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M8 44C24 42 34 36 40 22 43 15 45 10 46 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><g fill="currentColor" opacity=".35"><rect x="8" y="30" width="7" height="7" rx="1.5"/><rect x="17" y="30" width="7" height="7" rx="1.5"/><rect x="8" y="21" width="7" height="7" rx="1.5"/></g>'
   },
   {
@@ -32,6 +32,24 @@ window.CATALOG = [
     summary: "Specialists are faster at their own kind of work. Generalists keep work flowing when demand shifts or someone is away.",
     factors: ["Depth", "Flexibility", "Resilience"], related: ["utilization-flow", "brooks-law", "project-triangle"],
     glyph: '<path d="M8 12h40M28 12v38" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><path d="M8 12v8M48 12v8" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".5"/>'
+  },
+  {
+    slug: "batch-size", cat: "pm", title: "Batch size: setup cost vs. holding cost",
+    summary: "Big batches spread the fixed cost of each release, but finished work waits longer. The total cost is lowest in between.",
+    factors: ["Setup cost", "Holding cost", "Batch size"], related: ["utilization-flow", "wip-focus", "batch-streaming"],
+    glyph: '<path d="M6 8C12 52 44 52 50 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M6 8C8 26 14 36 18 40M50 8C48 26 42 36 38 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 6" opacity=".5"/><circle cx="28" cy="43" r="4.5" fill="currentColor"/>'
+  },
+  {
+    slug: "wip-focus", cat: "pm", title: "Parallel work vs. focus (WIP limits)",
+    summary: "Starting more things at once feels productive, but every switch costs time and delays all of them. Limiting work in progress finishes more, sooner.",
+    factors: ["Tasks in flight", "Context switching", "Cycle time"], related: ["utilization-flow", "batch-size", "specialist-generalist"],
+    glyph: '<g fill="currentColor" fill-opacity=".15" stroke="currentColor" stroke-width="2.5"><rect x="8" y="30" width="40" height="8" rx="2.5"/><rect x="8" y="41" width="40" height="8" rx="2.5"/></g><rect x="8" y="14" width="40" height="8" rx="2.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="4 4" opacity=".5"/><path d="M4 26h48" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>'
+  },
+  {
+    slug: "commit-optionality", cat: "pm", title: "Commit early vs. keep options open",
+    summary: "Waiting gives better information but costs time. How long to wait depends on how expensive it is to undo the decision.",
+    factors: ["Information", "Cost of delay", "Reversibility"], related: ["speed-consensus", "project-triangle", "technical-debt"],
+    glyph: '<rect x="12" y="6" width="26" height="44" rx="3" fill="currentColor" fill-opacity=".1" stroke="currentColor" stroke-width="2.5"/><path d="M38 6 52 12v38L38 50Z" fill="currentColor" fill-opacity=".3" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><circle cx="46" cy="30" r="2" fill="currentColor"/>'
   },
   {
     slug: "technical-debt", cat: "sw", title: "Technical debt",
@@ -66,7 +84,7 @@ window.CATALOG = [
   {
     slug: "batch-streaming", cat: "de", title: "Batch vs. streaming",
     summary: "Fresher data costs more to run and is harder to get right.",
-    factors: ["Latency", "Cost", "Complexity"], related: ["exact-approximate", "utilization-flow", "normalization"],
+    factors: ["Latency", "Cost", "Complexity"], related: ["exact-approximate", "utilization-flow", "batch-size"],
     glyph: '<g fill="currentColor"><circle cx="8" cy="16" r="3"/><circle cx="18" cy="16" r="3"/><circle cx="28" cy="16" r="3"/><circle cx="38" cy="16" r="3"/><circle cx="48" cy="16" r="3"/></g><path d="M8 32h40l-4 16H12Z" fill="currentColor" fill-opacity=".15" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><g fill="currentColor" opacity=".6"><circle cx="20" cy="41" r="3"/><circle cx="28" cy="41" r="3"/><circle cx="36" cy="41" r="3"/></g>'
   },
   {
@@ -96,7 +114,7 @@ window.CATALOG = [
   {
     slug: "speed-consensus", cat: "bc", title: "Speed vs. consensus",
     summary: "Involving more people builds buy-in but slows the decision. Match inclusion to how reversible the choice is.",
-    factors: ["Stakeholders", "Buy-in", "Decision time"], related: ["brooks-law", "candour-diplomacy", "brevity-completeness"],
+    factors: ["Stakeholders", "Buy-in", "Decision time"], related: ["brooks-law", "candour-diplomacy", "commit-optionality"],
     glyph: '<circle cx="28" cy="28" r="9" fill="currentColor"/><g fill="currentColor" opacity=".45"><circle cx="28" cy="7" r="5"/><circle cx="48" cy="22" r="5"/><circle cx="41" cy="46" r="5"/><circle cx="15" cy="46" r="5"/><circle cx="8" cy="22" r="5"/></g>'
   },
   {

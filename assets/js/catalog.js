@@ -202,7 +202,7 @@ window.CATALOG = [
     glyph: '<path d="M28 50V30M28 30 10 14M28 30 46 14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".55"/><path d="M28 30V10" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><g fill="currentColor"><circle cx="10" cy="14" r="4"/><circle cx="46" cy="14" r="4"/><circle cx="28" cy="8" r="5"/></g>'
   },
   {
-    slug: "significance-power", cat: "ds", title: "Significance vs. power (Type I vs. II errors)",
+    slug: "significance-power", cat: "ds", title: "Significance vs. power (Type I vs. Type II errors)",
     summary: "A test can raise a false alarm or miss a real effect. Making it stricter against one makes the other more likely, unless you collect more data.",
     factors: ["False alarms", "Missed effects", "Sample size"], related: ["precision-recall", "bias-variance", "exact-approximate"],
     glyph: '<path d="M28 38 20 50h16Z" fill="currentColor"/><path d="M6 36 50 22" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><circle cx="8" cy="30" r="6" fill="currentColor" fill-opacity=".2" stroke="currentColor" stroke-width="2.5"/><circle cx="48" cy="16" r="6" fill="currentColor"/>'

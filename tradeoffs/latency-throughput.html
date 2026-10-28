@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Latency vs. throughput · Trade-off Atlas</title>
+  <meta name="description" content="Handling work in batches shares fixed overhead and lets a system do more per second, but every item now waits for its batch. Faster single responses and higher total capacity pull in different directions.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+</head>
+<body class="cat-sw" data-root=".." data-slug="latency-throughput">
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3 25 23H3Z" fill="none" stroke="var(--pm)" stroke-width="2.6" stroke-linejoin="round"/><circle cx="14" cy="16" r="3.4" fill="var(--sw)"/></svg>
+        Trade-off Atlas
+      </a>
+      <div class="site-nav">
+        <button class="theme-toggle" type="button" aria-label="Toggle theme"></button>
+      </div>
+    </div>
+    <nav class="cat-nav" aria-label="Browse by topic">
+      <div class="wrap">
+        <a href="../index.html">All topics</a>
+        <a class="cat-pm" href="../index.html#pm"><span class="dot"></span>Project management</a>
+        <a class="cat-sw" href="../index.html#sw"><span class="dot"></span>Software development</a>
+        <a class="cat-de" href="../index.html#de"><span class="dot"></span>Data engineering</a>
+        <a class="cat-bc" href="../index.html#bc"><span class="dot"></span>Business communication</a>
+        <a class="cat-ds" href="../index.html#ds"><span class="dot"></span>Data science</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All trade-offs</a> / <a href="../index.html#sw">Software development</a></nav>
+    <header class="hero">
+      <span class="tag">Software development</span>
+      <h1>Latency vs. throughput</h1>
+      <p class="lede">Handling work in batches shares fixed overhead and lets a system do more per second, but every item now waits for its batch. Faster single responses and higher total capacity pull in different directions.</p>
+      <div class="vs"><span>Latency</span><i>vs.</i><span>Throughput</span></div>
+    </header>
+
+    <figure class="anim" id="anim"><noscript><p style="padding:20px">Turn on JavaScript to see the animation.</p></noscript></figure>
+
+    <article class="prose">
+      <section>
+        <h2>The trade-off</h2>
+        <p><strong>Latency</strong> is how long one request takes. <strong>Throughput</strong> is how many requests complete per second. They sound like the same thing, but optimising one often costs the other. Anything with a fixed cost per call (a network round trip, a disk flush, a GPU kernel launch, a transaction commit) goes faster overall when you do more work per call.</p>
+        <p>The catch is that each item in a batch waits for the rest. Throughput climbs quickly at first, then flattens as the overhead becomes a small share of the total, while latency keeps rising in a straight line. <strong>Little's law</strong> ties them together: the number of items in flight equals throughput × latency, so to hold latency down while raising throughput you need to add capacity, not just batch.</p>
+      </section>
+      <section>
+        <h2>How to use it</h2>
+        <ol>
+          <li><strong>Start from a latency budget</strong> (for example, 95% of requests under 200 ms), then find the largest batch or concurrency that meets it.</li>
+          <li><strong>Measure the fixed overhead.</strong> If it's tiny, batching gains little. If it dominates, batching is the main lever.</li>
+          <li><strong>Use a time cap as well as a size cap.</strong> "Send when 100 items are ready or after 10 ms" bounds the wait when traffic is light.</li>
+          <li><strong>Judge by percentiles, not averages.</strong> A batch hurts the slowest items most.</li>
+        </ol>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <div class="callout">
+          <p>A service writes each event to a database with its own round trip, and tops out at a few hundred writes per second. Buffering events for 20 ms and inserting them together raises capacity ten-fold, and the 20 ms is invisible to users. The same trick on a checkout page would add visible delay to every click, so there it makes sense to keep calls small and add servers instead.</p>
+        </div>
+      </section>
+      <section>
+        <h2>Watch out for</h2>
+        <ul>
+          <li><strong>Queues hide the latency.</strong> A system pushed past its throughput limit doesn't slow down smoothly, its queues grow until latency explodes. See <a href="utilization-flow.html">utilization vs. flow</a>.</li>
+          <li><strong>One failure can fail the batch.</strong> Decide in advance how partial failures are retried.</li>
+          <li>Related: <a href="time-space.html">time vs. space</a> trades memory for speed. This trades the wait of the individual for the capacity of the whole.</li>
+        </ul>
+      </section>
+    </article>
+
+    <nav class="related" id="related" aria-label="Related trade-offs"></nav>
+    <nav class="pager" id="pager" aria-label="More trade-offs"></nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Trade-off Atlas: mental models for better decisions. Models are simplified on purpose. Use them to frame the conversation, not to forecast.</p></div>
+  </footer>
+
+  <script src="../assets/js/catalog.js"></script>
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/engine.js"></script>
+  <script src="../assets/js/anim/latency-throughput.js"></script>
+</body>
+</html>

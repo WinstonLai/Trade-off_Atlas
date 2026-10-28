@@ -60,7 +60,7 @@ window.CATALOG = [
   {
     slug: "cap-theorem", cat: "sw", title: "CAP theorem",
     summary: "When the network splits, a distributed system must choose between consistent answers and always answering.",
-    factors: ["Consistency", "Availability", "Partition tolerance"], related: ["normalization", "batch-streaming", "monolith-microservices"],
+    factors: ["Consistency", "Availability", "Partition tolerance"], related: ["normalization", "quorum-consistency", "monolith-microservices"],
     glyph: '<circle cx="14" cy="28" r="9" fill="currentColor" fill-opacity=".15" stroke="currentColor" stroke-width="3"/><circle cx="42" cy="28" r="9" fill="currentColor" fill-opacity=".15" stroke="currentColor" stroke-width="3"/><path d="M23 28h6M33 28h0" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M27 20 31 36" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>'
   },
   {
@@ -72,7 +72,7 @@ window.CATALOG = [
   {
     slug: "time-space", cat: "sw", title: "Time vs. space (caching)",
     summary: "Spend memory to remember answers and skip the recomputation. Each extra byte of cache helps less than the last.",
-    factors: ["Memory", "Compute time", "Freshness"], related: ["exact-approximate", "normalization", "cap-theorem"],
+    factors: ["Memory", "Compute time", "Freshness"], related: ["exact-approximate", "normalization", "latency-throughput"],
     glyph: '<circle cx="24" cy="24" r="17" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="3"/><path d="M24 13v11l7 4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="34" y="34" width="17" height="15" rx="3" fill="currentColor"/>'
   },
   {
@@ -80,6 +80,24 @@ window.CATALOG = [
     summary: "Splitting a system lets teams ship independently, but turns function calls into network calls and adds more to operate.",
     factors: ["Team autonomy", "Operational complexity", "Coordination"], related: ["brooks-law", "flexibility-simplicity", "cap-theorem"],
     glyph: '<rect x="4" y="10" width="22" height="36" rx="3" fill="currentColor" fill-opacity=".15" stroke="currentColor" stroke-width="2.5"/><g fill="currentColor"><rect x="33" y="8" width="9" height="9" rx="2"/><rect x="45" y="8" width="9" height="9" rx="2" opacity=".6"/><rect x="33" y="24" width="9" height="9" rx="2" opacity=".6"/><rect x="45" y="24" width="9" height="9" rx="2"/><rect x="33" y="40" width="9" height="9" rx="2"/><rect x="45" y="40" width="9" height="9" rx="2" opacity=".6"/></g>'
+  },
+  {
+    slug: "latency-throughput", cat: "sw", title: "Latency vs. throughput",
+    summary: "Batching shares fixed overhead and lets a system do more per second, but every item waits for its batch.",
+    factors: ["Latency", "Throughput", "Batch size"], related: ["time-space", "utilization-flow", "batch-streaming"],
+    glyph: '<rect x="4" y="16" width="48" height="24" rx="12" fill="currentColor" fill-opacity=".1" stroke="currentColor" stroke-width="2.5"/><g fill="currentColor"><circle cx="16" cy="28" r="3.5"/><circle cx="26" cy="28" r="3.5"/><circle cx="36" cy="28" r="3.5" opacity=".6"/><circle cx="46" cy="28" r="3.5" opacity=".3"/></g><path d="M20 8h16M20 48h16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>'
+  },
+  {
+    slug: "quorum-consistency", cat: "sw", title: "Consistency vs. latency (quorums)",
+    summary: "Even with no failures, waiting for more replicas gives fresher reads but slower answers.",
+    factors: ["Consistency", "Latency", "Replicas"], related: ["cap-theorem", "optimistic-pessimistic", "normalization"],
+    glyph: '<g fill="currentColor"><circle cx="7" cy="16" r="4.5"/><circle cx="17.5" cy="16" r="4.5"/><circle cx="28" cy="16" r="4.5"/><circle cx="38.5" cy="16" r="4.5" opacity=".3"/><circle cx="49" cy="16" r="4.5" opacity=".3"/></g><path d="M5 30h24" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M27 40h24" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".55"/><path d="M28 24v22" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"/>'
+  },
+  {
+    slug: "optimistic-pessimistic", cat: "sw", title: "Optimistic vs. pessimistic locking",
+    summary: "Locking first is safe but makes everyone pay. Checking at the end is cheap when clashes are rare and wasteful when they're common.",
+    factors: ["Lock overhead", "Retries", "Contention"], related: ["quorum-consistency", "cap-theorem", "latency-throughput"],
+    glyph: '<rect x="12" y="26" width="32" height="24" rx="4" fill="currentColor" fill-opacity=".15" stroke="currentColor" stroke-width="2.5"/><path d="M19 26v-7a9 9 0 0 1 18 0v7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="28" cy="36" r="3" fill="currentColor"/><path d="M28 38v5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>'
   },
   {
     slug: "batch-streaming", cat: "de", title: "Batch vs. streaming",

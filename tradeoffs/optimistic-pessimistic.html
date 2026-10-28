@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Optimistic vs. pessimistic locking · Trade-off Atlas</title>
+  <meta name="description" content="Locking before you touch shared data is safe but makes everyone pay. Checking for conflicts only at the end is cheap when clashes are rare and wasteful when they&#x27;re common.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+</head>
+<body class="cat-sw" data-root=".." data-slug="optimistic-pessimistic">
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3 25 23H3Z" fill="none" stroke="var(--pm)" stroke-width="2.6" stroke-linejoin="round"/><circle cx="14" cy="16" r="3.4" fill="var(--sw)"/></svg>
+        Trade-off Atlas
+      </a>
+      <div class="site-nav">
+        <button class="theme-toggle" type="button" aria-label="Toggle theme"></button>
+      </div>
+    </div>
+    <nav class="cat-nav" aria-label="Browse by topic">
+      <div class="wrap">
+        <a href="../index.html">All topics</a>
+        <a class="cat-pm" href="../index.html#pm"><span class="dot"></span>Project management</a>
+        <a class="cat-sw" href="../index.html#sw"><span class="dot"></span>Software development</a>
+        <a class="cat-de" href="../index.html#de"><span class="dot"></span>Data engineering</a>
+        <a class="cat-bc" href="../index.html#bc"><span class="dot"></span>Business communication</a>
+        <a class="cat-ds" href="../index.html#ds"><span class="dot"></span>Data science</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All trade-offs</a> / <a href="../index.html#sw">Software development</a></nav>
+    <header class="hero">
+      <span class="tag">Software development</span>
+      <h1>Optimistic vs. pessimistic locking</h1>
+      <p class="lede">Locking before you touch shared data is safe but makes everyone pay. Checking for conflicts only at the end is cheap when clashes are rare and wasteful when they're common.</p>
+      <div class="vs"><span>Optimistic (retry)</span><i>vs.</i><span>Pessimistic (lock)</span></div>
+    </header>
+
+    <figure class="anim" id="anim"><noscript><p style="padding:20px">Turn on JavaScript to see the animation.</p></noscript></figure>
+
+    <article class="prose">
+      <section>
+        <h2>The trade-off</h2>
+        <p>When several writers may change the same record, you have two ways to stay correct. <strong>Pessimistic</strong> concurrency takes a lock first: nobody else can touch the data until you finish. It costs a little on every transaction and makes colliding writers wait, but nothing is ever redone. <strong>Optimistic</strong> concurrency lets everyone proceed and checks at commit time (usually a version number or compare-and-swap) whether anyone else changed the data. No lock overhead, no waiting, but a conflict means the work is thrown away and retried.</p>
+        <p>The right choice depends on how often transactions really collide. If the collision rate is <em>p</em>, an optimistic transaction needs on average 1 ÷ (1 − <em>p</em>) attempts. That's negligible at 2% and doubles at 50%, while a lock's cost grows only slowly with contention. So the two cost curves cross.</p>
+      </section>
+      <section>
+        <h2>How to use it</h2>
+        <ol>
+          <li><strong>Estimate real contention</strong> for the specific rows or objects, not the system's overall load. Most records are touched by one writer at a time.</li>
+          <li><strong>Default to optimistic</strong> for low-conflict, short transactions such as editing a profile, with a version column and a retry or a "someone else changed this" message.</li>
+          <li><strong>Use locks for hot spots</strong> where many writers hit the same record, or where redoing the work is expensive or has side effects such as charging a card.</li>
+          <li><strong>Keep locked sections short</strong> and acquire locks in a consistent order to avoid deadlocks.</li>
+        </ol>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <div class="callout">
+          <p>A document editor lets two people open the same page. Optimistic versioning works well: almost always only one person saves, and the rare clash shows a merge prompt. A ticket system that hands out the last seat for a popular concert sees thousands of buyers on a single row. With optimistic checks nearly every attempt would fail and retry, so it uses a lock or a queue for that row.</p>
+        </div>
+      </section>
+      <section>
+        <h2>Watch out for</h2>
+        <ul>
+          <li><strong>Retry storms.</strong> Under heavy contention, optimistic retries add load, which causes more conflicts. Use backoff and a retry limit.</li>
+          <li><strong>Lock costs beyond the lock.</strong> Held locks block readers, risk deadlock, and are hard to release safely across services or after a crash.</li>
+          <li>Related: both are ways of paying for agreement. The <a href="cap-theorem.html">CAP theorem</a> and <a href="quorum-consistency.html">quorums</a> show the same cost across machines rather than within a single database.</li>
+        </ul>
+      </section>
+    </article>
+
+    <nav class="related" id="related" aria-label="Related trade-offs"></nav>
+    <nav class="pager" id="pager" aria-label="More trade-offs"></nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Trade-off Atlas: mental models for better decisions. Models are simplified on purpose. Use them to frame the conversation, not to forecast.</p></div>
+  </footer>
+
+  <script src="../assets/js/catalog.js"></script>
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/engine.js"></script>
+  <script src="../assets/js/anim/optimistic-pessimistic.js"></script>
+</body>
+</html>

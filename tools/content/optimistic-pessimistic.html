@@ -1,0 +1,29 @@
+<!--meta {"title": "Optimistic vs. pessimistic locking", "cat": "sw", "lede": "Locking before you touch shared data is safe but makes everyone pay. Checking for conflicts only at the end is cheap when clashes are rare and wasteful when they're common.", "vs": ["Optimistic (retry)", "Pessimistic (lock)"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>When several writers may change the same record, you have two ways to stay correct. <strong>Pessimistic</strong> concurrency takes a lock first: nobody else can touch the data until you finish. It costs a little on every transaction and makes colliding writers wait, but nothing is ever redone. <strong>Optimistic</strong> concurrency lets everyone proceed and checks at commit time (usually a version number or compare-and-swap) whether anyone else changed the data. No lock overhead, no waiting, but a conflict means the work is thrown away and retried.</p>
+  <p>The right choice depends on how often transactions really collide. If the collision rate is <em>p</em>, an optimistic transaction needs on average 1 ÷ (1 − <em>p</em>) attempts. That's negligible at 2% and doubles at 50%, while a lock's cost grows only slowly with contention. So the two cost curves cross.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Estimate real contention</strong> for the specific rows or objects, not the system's overall load. Most records are touched by one writer at a time.</li>
+    <li><strong>Default to optimistic</strong> for low-conflict, short transactions such as editing a profile, with a version column and a retry or a "someone else changed this" message.</li>
+    <li><strong>Use locks for hot spots</strong> where many writers hit the same record, or where redoing the work is expensive or has side effects such as charging a card.</li>
+    <li><strong>Keep locked sections short</strong> and acquire locks in a consistent order to avoid deadlocks.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A document editor lets two people open the same page. Optimistic versioning works well: almost always only one person saves, and the rare clash shows a merge prompt. A ticket system that hands out the last seat for a popular concert sees thousands of buyers on a single row. With optimistic checks nearly every attempt would fail and retry, so it uses a lock or a queue for that row.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>Retry storms.</strong> Under heavy contention, optimistic retries add load, which causes more conflicts. Use backoff and a retry limit.</li>
+    <li><strong>Lock costs beyond the lock.</strong> Held locks block readers, risk deadlock, and are hard to release safely across services or after a crash.</li>
+    <li>Related: both are ways of paying for agreement. The <a href="cap-theorem.html">CAP theorem</a> and <a href="quorum-consistency.html">quorums</a> show the same cost across machines rather than within a single database.</li>
+  </ul>
+</section>

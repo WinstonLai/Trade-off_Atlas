@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy vs. utility (differential privacy) · Trade-off Atlas</title>
+  <meta name="description" content="Releasing statistics about people reveals something about them. Adding noise hides any one person, but also blurs the result. The amount of noise is a dial between privacy and accuracy.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+</head>
+<body class="cat-ds" data-root=".." data-slug="privacy-utility">
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3 25 23H3Z" fill="none" stroke="var(--pm)" stroke-width="2.6" stroke-linejoin="round"/><circle cx="14" cy="16" r="3.4" fill="var(--sw)"/></svg>
+        Trade-off Atlas
+      </a>
+      <div class="site-nav">
+        <button class="theme-toggle" type="button" aria-label="Toggle theme"></button>
+      </div>
+    </div>
+    <nav class="cat-nav" aria-label="Browse by topic">
+      <div class="wrap">
+        <a href="../index.html">All topics</a>
+        <a class="cat-pm" href="../index.html#pm"><span class="dot"></span>Project management</a>
+        <a class="cat-sw" href="../index.html#sw"><span class="dot"></span>Software development</a>
+        <a class="cat-de" href="../index.html#de"><span class="dot"></span>Data engineering</a>
+        <a class="cat-bc" href="../index.html#bc"><span class="dot"></span>Business communication</a>
+        <a class="cat-ds" href="../index.html#ds"><span class="dot"></span>Data science</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All trade-offs</a> / <a href="../index.html#ds">Data science</a></nav>
+    <header class="hero">
+      <span class="tag">Data science</span>
+      <h1>Privacy vs. utility (differential privacy)</h1>
+      <p class="lede">Releasing statistics about people reveals something about them. Adding noise hides any one person, but also blurs the result. The amount of noise is a dial between privacy and accuracy.</p>
+      <div class="vs"><span>Privacy</span><i>vs.</i><span>Utility</span></div>
+    </header>
+
+    <figure class="anim" id="anim"><noscript><p style="padding:20px">Turn on JavaScript to see the animation.</p></noscript></figure>
+
+    <article class="prose">
+      <section>
+        <h2>The trade-off</h2>
+        <p>Even aggregate numbers can leak. If a count of a rare condition goes from 4 to 5 when one person joins, anyone who knows the data before and after learns about that person. <strong>Differential privacy</strong> makes this precise: a release is private if its distribution barely changes whether or not any single person's record is included. The usual way to achieve it is to add random noise to the result, with its scale set by a <strong>privacy budget ε</strong>.</p>
+        <p>Small ε means a lot of noise: the outputs with and without you overlap almost completely, so no one can tell whether you were in the data, but the numbers are less accurate. Large ε means little noise and more accurate results, but weaker protection (the odds of detecting someone can move by up to e<sup>ε</sup>). For a count, the noise scale is simply 1/ε, so halving ε doubles the typical error. Noise matters most for small groups, because the error is the same size regardless of the count it blurs.</p>
+      </section>
+      <section>
+        <h2>How to use it</h2>
+        <ol>
+          <li><strong>Decide what the release is for,</strong> and how accurate it has to be to serve that purpose. Trends in large groups tolerate a lot of noise.</li>
+          <li><strong>Choose ε deliberately</strong> and write it down. Values of about 0.1 to 1 are typical for strong protection, and values above 5 offer little.</li>
+          <li><strong>Treat ε as a budget.</strong> Each query or release spends some, and the total grows as you publish more from the same data.</li>
+          <li><strong>Aggregate before adding noise</strong> and avoid publishing very small groups, where noise swamps the signal.</li>
+        </ol>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <div class="callout">
+          <p>A transit agency wants to publish how many riders use each station each hour. The busy stations have thousands of riders, so noise of a few people per count is negligible. The quiet stations at 3 a.m. have 2 to 5 riders, where the same noise hides almost everything. The agency suppresses or merges those hours, and publishes the rest with a stated ε.</p>
+        </div>
+      </section>
+      <section>
+        <h2>Watch out for</h2>
+        <ul>
+          <li><strong>Budgets add up.</strong> Release many statistics and the combined protection weakens. Track the total, not each release.</li>
+          <li><strong>The animation shows one fixed noise draw.</strong> In practice, the error varies from release to release, and a different random draw would shift the bars.</li>
+          <li>Related: this is another case of <a href="exact-approximate.html">exact vs. approximate</a>, where here the approximation is added on purpose and the price of accuracy is privacy.</li>
+        </ul>
+      </section>
+    </article>
+
+    <nav class="related" id="related" aria-label="Related trade-offs"></nav>
+    <nav class="pager" id="pager" aria-label="More trade-offs"></nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Trade-off Atlas: mental models for better decisions. Models are simplified on purpose. Use them to frame the conversation, not to forecast.</p></div>
+  </footer>
+
+  <script src="../assets/js/catalog.js"></script>
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/engine.js"></script>
+  <script src="../assets/js/anim/privacy-utility.js"></script>
+</body>
+</html>

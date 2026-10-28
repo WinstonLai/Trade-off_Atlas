@@ -1,0 +1,29 @@
+<!--meta {"title": "Privacy vs. utility (differential privacy)", "cat": "ds", "lede": "Releasing statistics about people reveals something about them. Adding noise hides any one person, but also blurs the result. The amount of noise is a dial between privacy and accuracy.", "vs": ["Privacy", "Utility"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>Even aggregate numbers can leak. If a count of a rare condition goes from 4 to 5 when one person joins, anyone who knows the data before and after learns about that person. <strong>Differential privacy</strong> makes this precise: a release is private if its distribution barely changes whether or not any single person's record is included. The usual way to achieve it is to add random noise to the result, with its scale set by a <strong>privacy budget ε</strong>.</p>
+  <p>Small ε means a lot of noise: the outputs with and without you overlap almost completely, so no one can tell whether you were in the data, but the numbers are less accurate. Large ε means little noise and more accurate results, but weaker protection (the odds of detecting someone can move by up to e<sup>ε</sup>). For a count, the noise scale is simply 1/ε, so halving ε doubles the typical error. Noise matters most for small groups, because the error is the same size regardless of the count it blurs.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Decide what the release is for,</strong> and how accurate it has to be to serve that purpose. Trends in large groups tolerate a lot of noise.</li>
+    <li><strong>Choose ε deliberately</strong> and write it down. Values of about 0.1 to 1 are typical for strong protection, and values above 5 offer little.</li>
+    <li><strong>Treat ε as a budget.</strong> Each query or release spends some, and the total grows as you publish more from the same data.</li>
+    <li><strong>Aggregate before adding noise</strong> and avoid publishing very small groups, where noise swamps the signal.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A transit agency wants to publish how many riders use each station each hour. The busy stations have thousands of riders, so noise of a few people per count is negligible. The quiet stations at 3 a.m. have 2 to 5 riders, where the same noise hides almost everything. The agency suppresses or merges those hours, and publishes the rest with a stated ε.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>Budgets add up.</strong> Release many statistics and the combined protection weakens. Track the total, not each release.</li>
+    <li><strong>The animation shows one fixed noise draw.</strong> In practice, the error varies from release to release, and a different random draw would shift the bars.</li>
+    <li>Related: this is another case of <a href="exact-approximate.html">exact vs. approximate</a>, where here the approximation is added on purpose and the price of accuracy is privacy.</li>
+  </ul>
+</section>

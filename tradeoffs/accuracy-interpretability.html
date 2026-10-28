@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accuracy vs. interpretability · Trade-off Atlas</title>
+  <meta name="description" content="More flexible models usually predict better but are harder to explain. How much explainability you should give up for accuracy depends on what is at stake when the model is wrong or questioned.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+</head>
+<body class="cat-ds" data-root=".." data-slug="accuracy-interpretability">
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3 25 23H3Z" fill="none" stroke="var(--pm)" stroke-width="2.6" stroke-linejoin="round"/><circle cx="14" cy="16" r="3.4" fill="var(--sw)"/></svg>
+        Trade-off Atlas
+      </a>
+      <div class="site-nav">
+        <button class="theme-toggle" type="button" aria-label="Toggle theme"></button>
+      </div>
+    </div>
+    <nav class="cat-nav" aria-label="Browse by topic">
+      <div class="wrap">
+        <a href="../index.html">All topics</a>
+        <a class="cat-pm" href="../index.html#pm"><span class="dot"></span>Project management</a>
+        <a class="cat-sw" href="../index.html#sw"><span class="dot"></span>Software development</a>
+        <a class="cat-de" href="../index.html#de"><span class="dot"></span>Data engineering</a>
+        <a class="cat-bc" href="../index.html#bc"><span class="dot"></span>Business communication</a>
+        <a class="cat-ds" href="../index.html#ds"><span class="dot"></span>Data science</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All trade-offs</a> / <a href="../index.html#ds">Data science</a></nav>
+    <header class="hero">
+      <span class="tag">Data science</span>
+      <h1>Accuracy vs. interpretability</h1>
+      <p class="lede">More flexible models usually predict better but are harder to explain. How much explainability you should give up for accuracy depends on what is at stake when the model is wrong or questioned.</p>
+      <div class="vs"><span>Accuracy</span><i>vs.</i><span>Interpretability</span></div>
+    </header>
+
+    <figure class="anim" id="anim"><noscript><p style="padding:20px">Turn on JavaScript to see the animation.</p></noscript></figure>
+
+    <article class="prose">
+      <section>
+        <h2>The trade-off</h2>
+        <p>A linear model or a short decision tree can be read: you can see which inputs mattered and by how much. Gradient-boosted ensembles and deep networks combine thousands or millions of parameters, which lets them capture subtle patterns, but no one can follow the reasoning for a given prediction. Accuracy usually rises with model flexibility, with <strong>diminishing returns</strong>, while interpretability falls steadily.</p>
+        <p>Post-hoc tools (feature importance, SHAP values, surrogate models) give <em>approximate</em> explanations of complex models, which helps but isn't the same as a model that is transparent by construction. What you need depends on the decision: whether people affected can ask "why", whether regulation requires reasons, whether errors are costly, and whether you need to debug and trust the model.</p>
+      </section>
+      <section>
+        <h2>How to use it</h2>
+        <ol>
+          <li><strong>Start with a simple, readable baseline.</strong> It sets the accuracy bar, and often turns out to be close enough.</li>
+          <li><strong>Measure what complexity buys.</strong> If a boosted model gains one point of accuracy over a tree, ask whether that point is worth the loss of explanation.</li>
+          <li><strong>Match the model to the stakes.</strong> Lending, hiring, medicine and the justice system call for explanations, while ranking or recommendations rarely do.</li>
+          <li><strong>If you choose a complex model,</strong> plan the explanations, monitoring and a human review path from the start.</li>
+        </ol>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <div class="callout">
+          <p>A bank compares a deep model with a scorecard built from a few dozen features. The deep model approves loans slightly more accurately, but a rejected applicant is legally entitled to reasons, and auditors need to check for bias. The bank uses the scorecard (with simple monotonic rules) for decisions. A marketing team picks which offer to show a visitor, where no one asks for reasons and a wrong guess costs little, and uses the most accurate model it can train.</p>
+        </div>
+      </section>
+      <section>
+        <h2>Watch out for</h2>
+        <ul>
+          <li><strong>Interpretable isn't automatically correct.</strong> A readable model can still encode bias or rely on a spurious feature. Readability makes the problem easier to find.</li>
+          <li><strong>The gap is often smaller than expected.</strong> On tabular data, simple models are frequently close to complex ones. On images and text, the gap can be large.</li>
+          <li>Related: <a href="bias-variance.html">bias vs. variance</a> is about generalising to new data, whereas this is about explaining the predictions. <a href="flexibility-simplicity.html">Flexibility vs. simplicity</a> describes the same pull in software design.</li>
+        </ul>
+      </section>
+    </article>
+
+    <nav class="related" id="related" aria-label="Related trade-offs"></nav>
+    <nav class="pager" id="pager" aria-label="More trade-offs"></nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Trade-off Atlas: mental models for better decisions. Models are simplified on purpose. Use them to frame the conversation, not to forecast.</p></div>
+  </footer>
+
+  <script src="../assets/js/catalog.js"></script>
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/engine.js"></script>
+  <script src="../assets/js/anim/accuracy-interpretability.js"></script>
+</body>
+</html>

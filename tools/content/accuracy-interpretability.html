@@ -1,0 +1,29 @@
+<!--meta {"title": "Accuracy vs. interpretability", "cat": "ds", "lede": "More flexible models usually predict better but are harder to explain. How much explainability you should give up for accuracy depends on what is at stake when the model is wrong or questioned.", "vs": ["Accuracy", "Interpretability"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>A linear model or a short decision tree can be read: you can see which inputs mattered and by how much. Gradient-boosted ensembles and deep networks combine thousands or millions of parameters, which lets them capture subtle patterns, but no one can follow the reasoning for a given prediction. Accuracy usually rises with model flexibility, with <strong>diminishing returns</strong>, while interpretability falls steadily.</p>
+  <p>Post-hoc tools (feature importance, SHAP values, surrogate models) give <em>approximate</em> explanations of complex models, which helps but isn't the same as a model that is transparent by construction. What you need depends on the decision: whether people affected can ask "why", whether regulation requires reasons, whether errors are costly, and whether you need to debug and trust the model.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Start with a simple, readable baseline.</strong> It sets the accuracy bar, and often turns out to be close enough.</li>
+    <li><strong>Measure what complexity buys.</strong> If a boosted model gains one point of accuracy over a tree, ask whether that point is worth the loss of explanation.</li>
+    <li><strong>Match the model to the stakes.</strong> Lending, hiring, medicine and the justice system call for explanations, while ranking or recommendations rarely do.</li>
+    <li><strong>If you choose a complex model,</strong> plan the explanations, monitoring and a human review path from the start.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A bank compares a deep model with a scorecard built from a few dozen features. The deep model approves loans slightly more accurately, but a rejected applicant is legally entitled to reasons, and auditors need to check for bias. The bank uses the scorecard (with simple monotonic rules) for decisions. A marketing team picks which offer to show a visitor, where no one asks for reasons and a wrong guess costs little, and uses the most accurate model it can train.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>Interpretable isn't automatically correct.</strong> A readable model can still encode bias or rely on a spurious feature. Readability makes the problem easier to find.</li>
+    <li><strong>The gap is often smaller than expected.</strong> On tabular data, simple models are frequently close to complex ones. On images and text, the gap can be large.</li>
+    <li>Related: <a href="bias-variance.html">bias vs. variance</a> is about generalising to new data, whereas this is about explaining the predictions. <a href="flexibility-simplicity.html">Flexibility vs. simplicity</a> describes the same pull in software design.</li>
+  </ul>
+</section>

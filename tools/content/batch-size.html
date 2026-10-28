@@ -1,0 +1,29 @@
+<!--meta {"title": "Batch size: setup cost vs. holding cost", "cat": "pm", "lede": "Big batches spread the fixed cost of each release over more work, but finished work waits longer to be used. Small batches flow faster and cost more per release. The total cost is lowest in between.", "vs": ["Setup cost", "Holding cost"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>Every batch of work has a <strong>fixed cost to start or ship it</strong> (a deploy, a review meeting, a changeover, an approval) and a <strong>cost of waiting</strong> while finished items sit until the batch is complete. Fewer, larger batches pay the fixed cost less often. Smaller batches shorten the wait, shrink the queue and surface problems sooner.</p>
+  <p>The total is a U-shaped curve. The classic economic order quantity puts the minimum at <strong>√(2 × setup × demand ÷ holding)</strong>, so a ten-fold drop in setup cost cuts the best batch size by only about three. The bottom of the U is also flat, which means you don't need the exact number, just the right order of magnitude.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Measure what one release really costs</strong>, including the people waiting on it and the risk it carries, not just the machine time.</li>
+    <li><strong>Price the wait.</strong> Delayed value, feedback you don't have yet and work that may go stale all count as holding cost.</li>
+    <li><strong>Attack the fixed cost, not the batch.</strong> Automating a deploy or shortening an approval moves the whole optimum towards smaller batches.</li>
+    <li><strong>Move in steps.</strong> Halve the batch, watch the effect on cycle time and rework, and stop when gains flatten.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A team ships quarterly because each release needs two weeks of manual testing and a change-board meeting. Features finish in week two and wait ten weeks for users. After automating the tests and replacing the board with a checklist, a release costs an hour, so the team ships weekly. Each release is smaller, easier to diagnose when something breaks, and the total effort goes down, not up.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>Shrinking batches without cutting setup cost</strong> just moves you up the left side of the U, where overhead dominates.</li>
+    <li><strong>Hidden holding costs.</strong> Wasted work from late feedback and the risk packed into a large release rarely show up on a spreadsheet, so people under-estimate the benefit of small batches.</li>
+    <li>This is about work moving through a team. For why queues build up when everyone is busy, see <a href="utilization-flow.html">utilization vs. flow</a>; for the same idea in data pipelines, see <a href="batch-streaming.html">batch vs. streaming</a>.</li>
+  </ul>
+</section>

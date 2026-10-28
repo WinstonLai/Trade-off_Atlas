@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Indexes: read speed vs. write cost · Trade-off Atlas</title>
+  <meta name="description" content="An index lets a query jump straight to its rows instead of scanning the table. But every index must be kept up to date on every write, and the later ones help less than the first.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+</head>
+<body class="cat-de" data-root=".." data-slug="index-read-write">
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3 25 23H3Z" fill="none" stroke="var(--pm)" stroke-width="2.6" stroke-linejoin="round"/><circle cx="14" cy="16" r="3.4" fill="var(--sw)"/></svg>
+        Trade-off Atlas
+      </a>
+      <div class="site-nav">
+        <button class="theme-toggle" type="button" aria-label="Toggle theme"></button>
+      </div>
+    </div>
+    <nav class="cat-nav" aria-label="Browse by topic">
+      <div class="wrap">
+        <a href="../index.html">All topics</a>
+        <a class="cat-pm" href="../index.html#pm"><span class="dot"></span>Project management</a>
+        <a class="cat-sw" href="../index.html#sw"><span class="dot"></span>Software development</a>
+        <a class="cat-de" href="../index.html#de"><span class="dot"></span>Data engineering</a>
+        <a class="cat-bc" href="../index.html#bc"><span class="dot"></span>Business communication</a>
+        <a class="cat-ds" href="../index.html#ds"><span class="dot"></span>Data science</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All trade-offs</a> / <a href="../index.html#de">Data engineering</a></nav>
+    <header class="hero">
+      <span class="tag">Data engineering</span>
+      <h1>Indexes: read speed vs. write cost</h1>
+      <p class="lede">An index lets a query jump straight to its rows instead of scanning the table. But every index must be kept up to date on every write, and the later ones help less than the first.</p>
+      <div class="vs"><span>Read speed</span><i>vs.</i><span>Write cost</span></div>
+    </header>
+
+    <figure class="anim" id="anim"><noscript><p style="padding:20px">Turn on JavaScript to see the animation.</p></noscript></figure>
+
+    <article class="prose">
+      <section>
+        <h2>The trade-off</h2>
+        <p>Without an index, a query has to read the whole table to find what it wants. An index is a second, sorted copy of some columns that lets the database find matching rows directly. It converts a scan into a lookup. The cost is that <strong>every insert, update and delete must also update every index</strong>, and each index takes storage and memory.</p>
+        <p>The benefit has <strong>diminishing returns</strong>, because workloads are skewed: a handful of query shapes account for most of the traffic. The first few indexes cover those, while later ones serve rare queries. Write cost, by contrast, grows with each index you add. The research literature states the general version as the <em>RUM conjecture</em>: you can't minimise read overhead, update overhead and memory all at once. Improve two and the third gets worse.</p>
+      </section>
+      <section>
+        <h2>How to use it</h2>
+        <ol>
+          <li><strong>Start from the queries,</strong> not the columns. Find the slow and frequent ones in query logs and index for those.</li>
+          <li><strong>Know the read/write ratio.</strong> A reporting replica can afford many indexes. A table receiving a firehose of inserts can afford very few.</li>
+          <li><strong>Prefer one composite index</strong> that serves several queries over many single-column ones, and drop indexes that no query plan uses.</li>
+          <li><strong>Re-check after changes.</strong> Index usage statistics show which ones earn their keep.</li>
+        </ol>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <div class="callout">
+          <p>An events table starts with indexes on six columns "just in case". Reads are quick, but ingest can't keep up and storage doubles. Query logs show two indexes serve 95% of lookups and three are never used. Dropping those three makes ingest faster by about a third and barely changes read times.</p>
+        </div>
+      </section>
+      <section>
+        <h2>Watch out for</h2>
+        <ul>
+          <li><strong>Unused indexes still cost.</strong> They slow writes and use memory even if no query touches them.</li>
+          <li><strong>The cost curve here is a model.</strong> Real index maintenance depends on the engine: B-trees, LSM trees and column stores pay in different places.</li>
+          <li>Related: an index is another stored answer to avoid recomputation, like a cache (<a href="time-space.html">time vs. space</a>), and a copy that must be kept in step, like <a href="normalization.html">denormalized data</a>.</li>
+        </ul>
+      </section>
+    </article>
+
+    <nav class="related" id="related" aria-label="Related trade-offs"></nav>
+    <nav class="pager" id="pager" aria-label="More trade-offs"></nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Trade-off Atlas: mental models for better decisions. Models are simplified on purpose. Use them to frame the conversation, not to forecast.</p></div>
+  </footer>
+
+  <script src="../assets/js/catalog.js"></script>
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/engine.js"></script>
+  <script src="../assets/js/anim/index-read-write.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!--meta {"title": "Consistency vs. latency (quorums)", "cat": "sw", "lede": "Even when nothing is broken, a replicated system must decide how many copies to wait for. Waiting for more gives fresher reads but slower answers.", "vs": ["Consistency", "Latency"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>The <a href="cap-theorem.html">CAP theorem</a> covers what happens during a network split. <strong>PACELC</strong> adds the more common case: <em>else</em>, when there is no partition, you still trade <strong>latency</strong> against <strong>consistency</strong>. Replicas take time to agree, and the more of them you wait for, the longer you wait.</p>
+  <p>Many replicated stores let you tune this with quorums. With <strong>N</strong> copies, a write waits for <strong>W</strong> acknowledgements and a read asks <strong>R</strong> replicas. If <strong>R + W &gt; N</strong>, every read set overlaps every write set, so a read always meets at least one replica with the latest value. Otherwise it can return stale data, but faster. Each operation's latency is set by the slowest replica you have to wait for.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Decide what stale means for this data.</strong> A like count can be seconds old. An account balance or inventory count usually can't.</li>
+    <li><strong>Pick the shape of the quorum from the workload.</strong> Read-heavy data: small R, large W. Write-heavy: the reverse. Balanced: majorities on both.</li>
+    <li><strong>Set it per operation</strong> where your database allows, so critical reads can ask for more replicas than casual ones.</li>
+    <li><strong>Measure tail latency.</strong> The slowest replica, not the average one, determines how a large quorum feels.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A shopping site keeps three copies of each record. Browsing the catalogue reads from one replica (R = 1): it's fast, and a price a few seconds out of date does no harm. At checkout, the stock check and order write both use majorities (2 + 2 &gt; 3), so two customers can't both buy the last item, at the price of a slightly slower final step.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>R + W &gt; N is necessary, not complete.</strong> Concurrent writes, clock skew and failed partial writes can still produce surprises, and quorums alone don't give you transactions.</li>
+    <li><strong>Higher quorums reduce availability.</strong> If W = N, a single down replica blocks every write.</li>
+    <li>The strict end of this dial is the world of <a href="normalization.html">normalized, single-source-of-truth data</a>. The loose end is eventual consistency and caches: <a href="time-space.html">time vs. space</a> has the same freshness cost.</li>
+  </ul>
+</section>

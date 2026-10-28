@@ -1,0 +1,29 @@
+<!--meta {"title": "Precision vs. plain language", "cat": "bc", "lede": "Technical terms are exact, but only to readers who know them. Plain wording is easier to follow, but can lose detail. The right level depends on who is reading.", "vs": ["Precision", "Plain language"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>Specialist vocabulary is compressed meaning. "Eventual consistency" or "net present value" carries a whole definition in two words, and for readers who share it nothing is lost. For everyone else, it is noise. Plain wording is open to anyone but takes more words and often stays approximate, since it can't carry the precise edges of a technical term.</p>
+  <p>What matters is not how exact the message is as written, but <strong>how much of it the reader actually takes in</strong>. A perfectly precise sentence that is half-understood delivers less than a slightly looser one that is fully understood. Experts are often the worst at spotting this: the <strong>curse of knowledge</strong> makes it hard to remember what it was like not to know a term.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Name the reader first.</strong> Peers, a manager in another function, a customer? Choose the vocabulary they already have.</li>
+    <li><strong>Lead with plain language, then add the term.</strong> "Copies of the data can lag behind (this is called eventual consistency)." Newcomers follow, experts see the label, and everyone learns it.</li>
+    <li><strong>Define a term the first time it appears,</strong> or link to where it's explained, and use it consistently afterwards.</li>
+    <li><strong>Test it.</strong> Ask one person from the intended audience to say back what they understood.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>An engineer's update to the leadership team reads "p99 latency regressed after the connection-pool change". Nobody outside engineering knows what to do with it. Rewritten as "A small share of customers (about 1 in 100) saw slow pages after Tuesday's change; we're rolling it back today", it's equally accurate in substance and far more actionable. The same engineer's note to a colleague on the team can keep the original wording.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>Plain doesn't mean vague.</strong> Replace the term with a concrete description (who, how many, what happens), not with a gesture such as "some issues".</li>
+    <li><strong>Mixed audiences.</strong> Layering helps: a plain summary on top, precise detail below for those who want it.</li>
+    <li>Related: <a href="brevity-completeness.html">brevity vs. completeness</a> trades how much you say, this trades how you say it. The curves in the animation are a stylised model, not measured data.</li>
+  </ul>
+</section>

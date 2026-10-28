@@ -144,7 +144,7 @@ window.CATALOG = [
   {
     slug: "brevity-completeness", cat: "bc", title: "Brevity vs. completeness",
     summary: "Each extra paragraph adds coverage and loses readers. The best message is as short as the audience allows.",
-    factors: ["Length", "Coverage", "Attention"], related: ["candour-diplomacy", "speed-consensus", "sync-async"],
+    factors: ["Length", "Coverage", "Attention"], related: ["candour-diplomacy", "jargon-plain-language", "sync-async"],
     glyph: '<rect x="8" y="6" width="40" height="44" rx="4" fill="currentColor" fill-opacity=".1" stroke="currentColor" stroke-width="2.5"/><path d="M15 16h26M15 24h26M15 32h18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M15 40h10" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".35"/>'
   },
   {
@@ -156,14 +156,32 @@ window.CATALOG = [
   {
     slug: "candour-diplomacy", cat: "bc", title: "Candour vs. diplomacy",
     summary: "Direct feedback is clear but can strain trust. Caring about the person lets you be direct without damage.",
-    factors: ["Directness", "Care", "Clarity"], related: ["brevity-completeness", "speed-consensus", "brooks-law"],
+    factors: ["Directness", "Care", "Clarity"], related: ["brevity-completeness", "speed-consensus", "claim-create"],
     glyph: '<rect x="6" y="6" width="44" height="44" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M28 6v44M6 28h44" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="28" y="6" width="22" height="22" fill="currentColor" fill-opacity=".2"/><circle cx="40" cy="16" r="5" fill="currentColor"/>'
   },
   {
     slug: "sync-async", cat: "bc", title: "Synchronous vs. asynchronous",
     summary: "Live conversation settles ambiguity fast but needs everyone's attention at once. Writing protects focus but is slower to resolve.",
-    factors: ["Immediacy", "Focus", "Record"], related: ["brevity-completeness", "speed-consensus", "utilization-flow"],
+    factors: ["Immediacy", "Focus", "Record"], related: ["brevity-completeness", "reach-relevance", "utilization-flow"],
     glyph: '<path d="M5 8h28a3 3 0 0 1 3 3v15a3 3 0 0 1-3 3H15l-8 8v-8H5a3 3 0 0 1-3-3V11a3 3 0 0 1 3-3Z" fill="currentColor" fill-opacity=".15" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" transform="translate(1 0)"/><path d="M22 32h26a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-3v7l-8-7H22a3 3 0 0 1-3-3V35a3 3 0 0 1 3-3Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="4 4" stroke-linejoin="round" transform="translate(0 -4) scale(.9) translate(3 4)"/>'
+  },
+  {
+    slug: "claim-create", cat: "bc", title: "Claiming vs. creating value",
+    summary: "Sharing information grows the pie but exposes you. Pushing hard for your share shrinks the pie and the chance of a deal.",
+    factors: ["Value created", "Your share", "Chance of a deal"], related: ["candour-diplomacy", "speed-consensus", "brevity-completeness"],
+    glyph: '<circle cx="28" cy="28" r="23" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3 4" opacity=".45"/><circle cx="28" cy="28" r="17" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="2.5"/><path d="M28 28V11a17 17 0 0 1 17 17Z" fill="currentColor"/>'
+  },
+  {
+    slug: "jargon-plain-language", cat: "bc", title: "Precision vs. plain language",
+    summary: "Technical terms are exact, but only to readers who know them. The right level depends on who is reading.",
+    factors: ["Precision", "Comprehension", "Audience"], related: ["brevity-completeness", "candour-diplomacy", "sync-async"],
+    glyph: '<path d="M18 8c-6 0-6 4-6 8v5c0 4-3 5-5 7 2 2 5 3 5 7v5c0 4 0 8 6 8M38 8c6 0 6 4 6 8v5c0 4 3 5 5 7-2 2-5 3-5 7v5c0 4 0 8-6 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="28" cy="28" r="4" fill="currentColor"/>'
+  },
+  {
+    slug: "reach-relevance", cat: "bc", title: "Reach vs. relevance (broadcast vs. targeted)",
+    summary: "Sending to everyone misses nobody but spends everyone's attention. Targeting protects attention if you know who needs to know.",
+    factors: ["Reach", "Relevance", "Attention"], related: ["brevity-completeness", "sync-async", "speed-consensus"],
+    glyph: '<g fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="28" cy="28" r="22" opacity=".35"/><circle cx="28" cy="28" r="14" opacity=".65"/><circle cx="28" cy="28" r="6"/></g><circle cx="28" cy="28" r="2.5" fill="currentColor"/><g fill="currentColor" opacity=".4"><circle cx="6" cy="10" r="2.5"/><circle cx="50" cy="8" r="2.5"/><circle cx="52" cy="48" r="2.5"/><circle cx="5" cy="46" r="2.5"/></g>'
   },
   {
     slug: "bias-variance", cat: "ds", title: "Bias vs. variance",

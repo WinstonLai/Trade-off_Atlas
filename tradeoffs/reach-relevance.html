@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reach vs. relevance (broadcast vs. targeted) · Trade-off Atlas</title>
+  <meta name="description" content="Sending a message to everyone makes sure nobody who needs it is missed, but it spends everyone&#x27;s attention and trains people to skim. Targeting protects attention, if you know who needs to know.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+</head>
+<body class="cat-bc" data-root=".." data-slug="reach-relevance">
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3 25 23H3Z" fill="none" stroke="var(--pm)" stroke-width="2.6" stroke-linejoin="round"/><circle cx="14" cy="16" r="3.4" fill="var(--sw)"/></svg>
+        Trade-off Atlas
+      </a>
+      <div class="site-nav">
+        <button class="theme-toggle" type="button" aria-label="Toggle theme"></button>
+      </div>
+    </div>
+    <nav class="cat-nav" aria-label="Browse by topic">
+      <div class="wrap">
+        <a href="../index.html">All topics</a>
+        <a class="cat-pm" href="../index.html#pm"><span class="dot"></span>Project management</a>
+        <a class="cat-sw" href="../index.html#sw"><span class="dot"></span>Software development</a>
+        <a class="cat-de" href="../index.html#de"><span class="dot"></span>Data engineering</a>
+        <a class="cat-bc" href="../index.html#bc"><span class="dot"></span>Business communication</a>
+        <a class="cat-ds" href="../index.html#ds"><span class="dot"></span>Data science</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All trade-offs</a> / <a href="../index.html#bc">Business communication</a></nav>
+    <header class="hero">
+      <span class="tag">Business communication</span>
+      <h1>Reach vs. relevance (broadcast vs. targeted)</h1>
+      <p class="lede">Sending a message to everyone makes sure nobody who needs it is missed, but it spends everyone's attention and trains people to skim. Targeting protects attention, if you know who needs to know.</p>
+      <div class="vs"><span>Reach</span><i>vs.</i><span>Relevance</span></div>
+    </header>
+
+    <figure class="anim" id="anim"><noscript><p style="padding:20px">Turn on JavaScript to see the animation.</p></noscript></figure>
+
+    <article class="prose">
+      <section>
+        <h2>The trade-off</h2>
+        <p>Every message has two audiences: the people who <em>need</em> it and the people who merely <em>receive</em> it. <strong>Broadcasting</strong> (an all-hands email, a company-wide channel) maximises reach, so no one is left out. But each recipient who doesn't need it pays in attention, and readers learn from experience. If most messages from a source are irrelevant, they skim or mute it, so the message that matters later is less likely to be read.</p>
+        <p><strong>Targeting</strong> sends to the smaller group who need it. It preserves attention and trust in the channel, but it only works when you can tell who that group is. If you can't, targeting means guessing, and every wrong guess is someone who never hears about something important. In that case the cost of a broad send can be worth paying.</p>
+      </section>
+      <section>
+        <h2>How to use it</h2>
+        <ol>
+          <li><strong>Ask who must act or decide differently</strong> because of this message. They go on the "to" line. Everyone else is optional.</li>
+          <li><strong>Use tiers.</strong> Send the full detail to those affected, and a one-line summary or a link to everyone who merely might care.</li>
+          <li><strong>Make broadcast channels earn their audience.</strong> Keep them for things that matter to nearly everyone, so people keep reading them.</li>
+          <li><strong>Let people opt in</strong> (subscribable channels, lists by topic), so the recipients select themselves when you can't select for them.</li>
+        </ol>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <div class="callout">
+          <p>A platform team announces a database change to all 400 engineers every time. Within months, people filter the emails out, and when a breaking change affects one team, the team misses it. The team switches to a short note to the owners of the affected services (found from the service catalogue) and a weekly digest for everyone else. Fewer messages go out, and the ones that do get read.</p>
+        </div>
+      </section>
+      <section>
+        <h2>Watch out for</h2>
+        <ul>
+          <li><strong>"Just in case" copying.</strong> Adding people to be safe feels free to the sender and isn't free to the recipients.</li>
+          <li><strong>Over-targeting.</strong> Leaving out someone who needed to know is usually a worse mistake than including someone who didn't. Be generous when the cost of a miss is high.</li>
+          <li>Related: <a href="speed-consensus.html">speed vs. consensus</a> asks how many people to involve in a decision, and <a href="brevity-completeness.html">brevity vs. completeness</a> how much to tell each of them. The read-rate curve in the animation is a stylised assumption.</li>
+        </ul>
+      </section>
+    </article>
+
+    <nav class="related" id="related" aria-label="Related trade-offs"></nav>
+    <nav class="pager" id="pager" aria-label="More trade-offs"></nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Trade-off Atlas: mental models for better decisions. Models are simplified on purpose. Use them to frame the conversation, not to forecast.</p></div>
+  </footer>
+
+  <script src="../assets/js/catalog.js"></script>
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/engine.js"></script>
+  <script src="../assets/js/anim/reach-relevance.js"></script>
+</body>
+</html>

@@ -36,9 +36,9 @@ TEMPLATE = """<!doctype html>
       <div class="wrap">
         <a href="../index.html">All topics</a>
         <a class="cat-pm" href="../index.html#pm"><span class="dot"></span>Project management</a>
+        <a class="cat-bc" href="../index.html#bc"><span class="dot"></span>Business communication</a>
         <a class="cat-sw" href="../index.html#sw"><span class="dot"></span>Software development</a>
         <a class="cat-de" href="../index.html#de"><span class="dot"></span>Data engineering</a>
-        <a class="cat-bc" href="../index.html#bc"><span class="dot"></span>Business communication</a>
         <a class="cat-ds" href="../index.html#ds"><span class="dot"></span>Data science</a>
       </div>
     </nav>

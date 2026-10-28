@@ -60,7 +60,7 @@ window.CATALOG = [
   {
     slug: "cap-theorem", cat: "sw", title: "CAP theorem",
     summary: "When the network splits, a distributed system must choose between consistent answers and always answering.",
-    factors: ["Consistency", "Availability", "Partition tolerance"], related: ["normalization", "quorum-consistency", "monolith-microservices"],
+    factors: ["Consistency", "Availability", "Partition tolerance"], related: ["normalization", "quorum-consistency", "partitioning"],
     glyph: '<circle cx="14" cy="28" r="9" fill="currentColor" fill-opacity=".15" stroke="currentColor" stroke-width="3"/><circle cx="42" cy="28" r="9" fill="currentColor" fill-opacity=".15" stroke="currentColor" stroke-width="3"/><path d="M23 28h6M33 28h0" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M27 20 31 36" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>'
   },
   {
@@ -108,7 +108,7 @@ window.CATALOG = [
   {
     slug: "normalization", cat: "de", title: "Normalization vs. denormalization",
     summary: "Store each fact once and keep it consistent, or copy it where it's read and get fast reads.",
-    factors: ["Write integrity", "Read speed", "Storage"], related: ["batch-streaming", "cap-theorem", "schema-write-read"],
+    factors: ["Write integrity", "Read speed", "Storage"], related: ["row-column", "cap-theorem", "schema-write-read"],
     glyph: '<g stroke="currentColor" stroke-width="2.5" fill="currentColor" fill-opacity=".1"><rect x="4" y="8" width="18" height="16" rx="2.5"/><rect x="34" y="8" width="18" height="16" rx="2.5"/><rect x="10" y="34" width="36" height="16" rx="2.5"/></g><path d="M13 24v10M43 24v10" stroke="currentColor" stroke-width="2.5"/>'
   },
   {
@@ -122,6 +122,24 @@ window.CATALOG = [
     summary: "Validate before storing and consumers get clean data. Store raw and shape it later and you stay flexible, but every reader pays.",
     factors: ["Upfront rigour", "Flexibility", "Data quality"], related: ["normalization", "batch-streaming", "exact-approximate"],
     glyph: '<path d="M6 8h44L34 28v16l-12 6V28Z" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M20 15h16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".6"/>'
+  },
+  {
+    slug: "row-column", cat: "de", title: "Row vs. column storage",
+    summary: "Storing each record together makes single-record work fast. Storing each column together makes scanning a few columns fast.",
+    factors: ["Point lookups", "Scan speed", "Write cost"], related: ["normalization", "schema-write-read", "index-read-write"],
+    glyph: '<g fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2"><rect x="3" y="12" width="22" height="32" rx="2.5"/><rect x="31" y="12" width="22" height="32" rx="2.5"/></g><rect x="5" y="19" width="18" height="6" rx="1.5" fill="currentColor"/><rect x="38" y="14" width="6" height="28" rx="1.5" fill="currentColor"/><path d="M5 33h18M31 28h4M47 28h4" stroke="currentColor" stroke-width="2" opacity=".5"/>'
+  },
+  {
+    slug: "index-read-write", cat: "de", title: "Indexes: read speed vs. write cost",
+    summary: "An index turns a scan into a lookup, but every write must update it, and each extra index helps less than the last.",
+    factors: ["Read speed", "Write cost", "Storage"], related: ["time-space", "row-column", "normalization"],
+    glyph: '<rect x="6" y="8" width="36" height="40" rx="3.5" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="2.5"/><path d="M13 18h22M13 26h22M13 34h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".5"/><g fill="currentColor"><rect x="42" y="12" width="10" height="9" rx="2"/><rect x="42" y="25" width="10" height="9" rx="2" opacity=".6"/><rect x="42" y="38" width="10" height="9" rx="2" opacity=".35"/></g>'
+  },
+  {
+    slug: "partitioning", cat: "de", title: "Hash vs. range partitioning",
+    summary: "Splitting by key range keeps neighbours together but concentrates bursts. Splitting by hash spreads load but scatters range queries.",
+    factors: ["Even load", "Range queries", "Hot spots"], related: ["cap-theorem", "row-column", "quorum-consistency"],
+    glyph: '<rect x="5" y="8" width="46" height="40" rx="3.5" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M17 8v40M28 8v40M39 8v40" stroke="currentColor" stroke-width="2" opacity=".5"/><g fill="currentColor"><rect x="30" y="14" width="8" height="26" rx="1.5" opacity=".35"/><circle cx="11" cy="18" r="3"/><circle cx="23" cy="34" r="3"/><circle cx="45" cy="22" r="3"/><circle cx="34" cy="42" r="3"/></g>'
   },
   {
     slug: "brevity-completeness", cat: "bc", title: "Brevity vs. completeness",

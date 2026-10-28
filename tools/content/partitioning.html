@@ -1,0 +1,29 @@
+<!--meta {"title": "Hash vs. range partitioning", "cat": "de", "lede": "Splitting data across machines by key range keeps related rows together, which makes range queries cheap but concentrates bursts of new keys on one machine. Splitting by hash spreads the load but scatters neighbours.", "vs": ["Even load", "Range queries"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>To scale beyond one machine you partition (shard) the data by key. <strong>Range partitioning</strong> assigns each partition a contiguous slice of the key space, so rows with nearby keys live together. Querying "all events between 9:00 and 10:00" touches one or two partitions. <strong>Hash partitioning</strong> assigns rows by a hash of the key, which scatters them uniformly across partitions.</p>
+  <p>Each choice has a weak spot. Real keys are rarely uniform: timestamps, auto-incrementing IDs and popular names all cluster. With ranges, a burst of recent keys all land on the newest partition, which becomes a <strong>hot spot</strong> that caps the whole cluster's throughput however many machines you add. With hashing the load is even, but a range query has to <strong>fan out to every partition</strong> and merge the results.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>List the access patterns.</strong> Point lookups by key? Hash is natural. Frequent range scans or time-window queries? Range keeps them local.</li>
+    <li><strong>Look at the write pattern.</strong> Monotonic keys (time, sequence numbers) under range partitioning funnel all writes to one end.</li>
+    <li><strong>Combine them.</strong> A composite key such as (hash of user, timestamp) spreads users across partitions while keeping each user's history contiguous and range-scannable.</li>
+    <li><strong>Plan for change.</strong> Use many more partitions than machines, or consistent hashing, so adding a machine moves only a fraction of the data.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A sensor platform partitions readings by timestamp range so dashboards for "the last day" read a few partitions. At peak, every device writes to the current-hour partition and one node saturates while the rest sit idle. Re-keying by (device ID hash, timestamp) spreads the writes evenly and still lets each device's recent history be read from one place.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>Hash doesn't fix a hot key.</strong> One very popular record still lands on one partition. Replicating or splitting that key is a separate remedy.</li>
+    <li><strong>The model is simplified.</strong> Here the hot traffic fits inside the last range. Real systems also rebalance ranges automatically.</li>
+    <li>Related: spreading data over machines is where the <a href="cap-theorem.html">CAP theorem</a> begins to matter, and fan-out queries are a cost of the same kind as <a href="normalization.html">joins over normalized data</a>.</li>
+  </ul>
+</section>

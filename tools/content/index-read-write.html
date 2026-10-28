@@ -1,0 +1,29 @@
+<!--meta {"title": "Indexes: read speed vs. write cost", "cat": "de", "lede": "An index lets a query jump straight to its rows instead of scanning the table. But every index must be kept up to date on every write, and the later ones help less than the first.", "vs": ["Read speed", "Write cost"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>Without an index, a query has to read the whole table to find what it wants. An index is a second, sorted copy of some columns that lets the database find matching rows directly. It converts a scan into a lookup. The cost is that <strong>every insert, update and delete must also update every index</strong>, and each index takes storage and memory.</p>
+  <p>The benefit has <strong>diminishing returns</strong>, because workloads are skewed: a handful of query shapes account for most of the traffic. The first few indexes cover those, while later ones serve rare queries. Write cost, by contrast, grows with each index you add. The research literature states the general version as the <em>RUM conjecture</em>: you can't minimise read overhead, update overhead and memory all at once. Improve two and the third gets worse.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Start from the queries,</strong> not the columns. Find the slow and frequent ones in query logs and index for those.</li>
+    <li><strong>Know the read/write ratio.</strong> A reporting replica can afford many indexes. A table receiving a firehose of inserts can afford very few.</li>
+    <li><strong>Prefer one composite index</strong> that serves several queries over many single-column ones, and drop indexes that no query plan uses.</li>
+    <li><strong>Re-check after changes.</strong> Index usage statistics show which ones earn their keep.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>An events table starts with indexes on six columns "just in case". Reads are quick, but ingest can't keep up and storage doubles. Query logs show two indexes serve 95% of lookups and three are never used. Dropping those three makes ingest faster by about a third and barely changes read times.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>Unused indexes still cost.</strong> They slow writes and use memory even if no query touches them.</li>
+    <li><strong>The cost curve here is a model.</strong> Real index maintenance depends on the engine: B-trees, LSM trees and column stores pay in different places.</li>
+    <li>Related: an index is another stored answer to avoid recomputation, like a cache (<a href="time-space.html">time vs. space</a>), and a copy that must be kept in step, like <a href="normalization.html">denormalized data</a>.</li>
+  </ul>
+</section>

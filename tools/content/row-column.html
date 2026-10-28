@@ -1,0 +1,29 @@
+<!--meta {"title": "Row vs. column storage", "cat": "de", "lede": "Storing each record together makes fetching or changing one record fast. Storing each column together makes scanning a few columns across millions of records fast. The layout decides which job is cheap.", "vs": ["Row store (OLTP)", "Column store (OLAP)"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>A <strong>row store</strong> (most traditional databases) writes all the values of a record next to each other on disk. Reading or updating one customer is a single read. A <strong>column store</strong> writes each column's values together instead. A query that needs two columns out of fifty reads two columns' worth of data and skips the rest.</p>
+  <p>Columns also compress very well, because values in one column look alike, and they allow vectorised processing. The price is on the other side: assembling a whole record means gathering one value from each column, and a single-row insert or update touches every column's storage. This is why transactional systems (<strong>OLTP</strong>) usually use rows and analytical warehouses (<strong>OLAP</strong>) usually use columns.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Look at the access pattern.</strong> Mostly "get or change one record by key"? Rows. Mostly "aggregate a few columns over many records"? Columns.</li>
+    <li><strong>Count the columns you actually read.</strong> The wider the table and the narrower the query, the bigger the column store's advantage.</li>
+    <li><strong>Separate the workloads.</strong> A common design keeps the transactional database in rows and copies data to a columnar warehouse for reporting.</li>
+    <li><strong>For mixed needs,</strong> consider hybrid formats (row groups with columnar chunks, such as Parquet) or engines that keep both layouts.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>An orders table has 40 columns and 500 million rows. "Total revenue by day" needs two of them. A row store reads all 40 columns of every row, while a column store reads two and compresses them well, so the report drops from minutes to seconds. The checkout service that loads one order by ID is better off on the row store, where that whole record sits together.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>Frequent small writes</strong> are slow and costly in column stores, which prefer large batched loads.</li>
+    <li><strong>Wide scans of all columns</strong> remove the benefit, as shown above. If every query wants nearly every column, layout matters little.</li>
+    <li>The numbers here are a simple model (a fixed cost per place read plus a cost per value). Real engines add compression, caching and indexes. Related: <a href="normalization.html">normalization</a> decides how many tables there are, while this decides how each table is laid out on disk.</li>
+  </ul>
+</section>

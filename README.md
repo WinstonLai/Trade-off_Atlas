@@ -1,6 +1,6 @@
 # Trade-off Atlas
 
-Animated mental models of the trade-offs that keep coming up in project management, software development, data engineering, data science and business communication.
+Animated mental models of the trade-offs that keep coming up in project management, business communication, software development, data engineering and data science.
 
 Each trade-off has its own page with an animation that auto-plays a short scenario, sliders to explore it yourself, and a short guide: what pulls against what, how to use it, an example, and what to watch out for.
 
@@ -10,11 +10,13 @@ Each trade-off has its own page with an animation that auto-plays a short scenar
 
 | Category | Trade-offs |
 |---|---|
-| Project management | Project management triangle · Brooks's law · Utilization vs. flow · Specialist vs. generalist |
-| Software development | Technical debt · CAP theorem · Flexibility vs. simplicity · Time vs. space (caching) · Monolith vs. microservices |
-| Data engineering | Batch vs. streaming · Normalization vs. denormalization · Exact vs. approximate · Schema-on-write vs. schema-on-read |
-| Business communication | Brevity vs. completeness · Speed vs. consensus · Candour vs. diplomacy · Synchronous vs. asynchronous |
-| Data science | Bias vs. variance · Precision vs. recall · Explore vs. exploit |
+| Project management | Project management triangle · Brooks's law · Utilization vs. flow · Specialist vs. generalist · Batch size · Parallel work vs. focus (WIP limits) · Commit early vs. keep options open |
+| Business communication | Brevity vs. completeness · Speed vs. consensus · Candour vs. diplomacy · Synchronous vs. asynchronous · Claiming vs. creating value · Precision vs. plain language · Reach vs. relevance |
+| Software development | Technical debt · CAP theorem · Flexibility vs. simplicity · Time vs. space (caching) · Monolith vs. microservices · Latency vs. throughput · Consistency vs. latency (quorums) · Optimistic vs. pessimistic locking |
+| Data engineering | Batch vs. streaming · Normalization vs. denormalization · Exact vs. approximate · Schema-on-write vs. schema-on-read · Row vs. column storage · Indexes: read speed vs. write cost · Hash vs. range partitioning |
+| Data science | Bias vs. variance · Precision vs. recall · Explore vs. exploit · Significance vs. power · Privacy vs. utility · Accuracy vs. interpretability |
+
+Categories run from soft skills to technical ones, in the same order as the header nav and the home grid.
 
 ## Run locally
 
@@ -29,11 +31,11 @@ Then open http://localhost:8765.
 ## Project layout
 
 ```
-index.html                 Home: search, category filters, card grid
+index.html                 Home: search, card grid grouped by category (header nav filters via URL hash)
 tradeoffs/<slug>.html      One page per trade-off (generated, see below)
 assets/css/site.css        Design tokens (light/dark) and all styles
 assets/js/catalog.js       List of trade-offs: titles, categories, summaries, related links
-assets/js/site.js          Theme toggle, home filtering/search, related + prev/next links
+assets/js/site.js          Theme toggle, home hash filter/search, related + prev/next links
 assets/js/engine.js        Shared animation engine: scenario playback, sliders, "hold constant"
 assets/js/anim/<slug>.js   One small model + SVG drawing per trade-off
 tools/gen.py               Builds tradeoffs/*.html from tools/content/*.html
@@ -55,7 +57,7 @@ Update all of these, then re-run `tools/gen.py`:
 
 - `window.CATEGORIES` in `assets/js/catalog.js`
 - `CATS` and the header nav links in `tools/gen.py`
-- the header nav links in `index.html`
+- the header nav links in `index.html` (nav, `CATEGORIES` and the table below share one order)
 - an accent colour `--<id>` in each of the three theme blocks of `assets/css/site.css`, plus a `.cat-<id>` rule
 - the category table above
 

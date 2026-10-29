@@ -13,6 +13,8 @@ python3 tools/gen.py .             # regenerate tradeoffs/*.html from tools/cont
 
 Verification is manual: load the page in a browser and watch the animation, sliders and console.
 
+A `Stop` hook (`.claude/settings.json`, script in `.claude/hooks/check-docs.sh`) blocks finishing a turn while source files have uncommitted changes but `README.md` and `CLAUDE.md` do not; review both and update what is stale.
+
 ## Architecture
 
 **Generated pages are committed.** `tradeoffs/<slug>.html` is output of `tools/gen.py`, built from the `TEMPLATE` string in that script plus `tools/content/<slug>.html`. Never hand-edit `tradeoffs/*.html`: change the content fragment (or the template in `gen.py`) and re-run the generator, then commit both. A template change touches every page. `gen.py` rewrites every page on each run.

@@ -11,7 +11,7 @@ python3 -m http.server 8765        # serve at http://localhost:8765
 python3 tools/gen.py .             # regenerate tradeoffs/*.html from tools/content/*.html (run from repo root)
 ```
 
-Verification is manual: load the page in a browser and watch the animation, sliders and console.
+Verification is manual: load the page in a browser and watch the animation, sliders and console. `python3 -m http.server` lets the browser cache `assets/js/**`, so after editing an animation, hard-reload (or `fetch(url, {cache: "reload"})`) before judging a layout. A thrown error inside `draw` silently stops the animation loop (the caption stays on step 1), so confirm the caption advances.
 
 A `Stop` hook (`.claude/settings.json`, script in `.claude/hooks/check-docs.sh`) blocks finishing a turn while source files have uncommitted changes but `README.md` and `CLAUDE.md` do not; review both and update what is stale.
 
@@ -29,7 +29,7 @@ A `Stop` hook (`.claude/settings.json`, script in `.claude/hooks/check-docs.sh`)
 - Scenario steps tween `set` values with easing, calling `relate` on each tick unless the step has `direct: true`. `choice` vars switch instantly. Jumping to a step (`go`) replays earlier steps' end states, so keyframes must be deterministic.
 - Any user input pauses autoplay. `prefers-reduced-motion` disables autoplay and tweening.
 - `draw` should mutate existing SVG nodes via `T.set` rather than rebuild them. `T.set` routes `fill/stroke/opacity` through `style` (so CSS variables work) and `text` through `textContent`.
-- `T.chart` is the shared axis-and-curve helper.
+- `T.chart` is the shared axis-and-curve helper. It draws only the axes: curve labels, tick labels and legends are placed by hand. By convention the left panel is text and bars within x 30-360, and the chart sits at x 392 (218 wide), so a long `t-mid` line or label in the left panel collides with the chart. Keep SVG text short, and put a legend under the chart (`h: 160`) when more than three curves compete for labels.
 - Script load order on each page: `catalog.js`, `site.js`, `engine.js`, `anim/<slug>.js`. The anim file name must equal the slug.
 
 **Styling.** All in `assets/css/site.css`: light/dark design tokens, with the theme toggled through `data-theme` on `<html>` (persisted in `localStorage`, applied by an inline script in `<head>` to avoid a flash). The body class `cat-<id>` selects the category accent color. Animations use CSS variables (`--s1`, `--s2`, `--ink`, `--muted`, `--line`, `--surface`) rather than hard-coded colors so both themes work.

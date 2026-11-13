@@ -1,0 +1,35 @@
+<!--meta {"title": "Training data vs. test data (the split)", "cat": "ds", "lede": "Every labelled row you hold back to test the model is a row it can't learn from. Hold back too few and you can't trust the score. Hold back too many and the model you're scoring is weaker than it could be.", "vs": ["Training data", "Test data"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>To know how well a model works on new data you have to try it on rows it hasn't seen. But the same rows can't also train it. A split divides a fixed pool of labelled data between two jobs that both want more of it:</p>
+  <ul>
+    <li><strong>More training data</strong> lowers the model's error, with diminishing returns (the learning curve).</li>
+    <li><strong>More test data</strong> makes the score more precise. The margin of error shrinks roughly with the square root of the number of test rows.</li>
+  </ul>
+  <p>A small test set gives a noisy score: a model that looks good might just have been lucky on 100 rows. A small training set gives a weaker model. The total uncertainty is lowest somewhere in the middle, but the curve is flat across a wide range, so the exact percentage matters less than avoiding the extremes. With very little data no split works well, and with a lot of data almost any sensible one does.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Start with a conventional split</strong> (roughly 70/30 to 90/10, depending on size). It is rarely badly wrong.</li>
+    <li><strong>Count test rows, not percentages.</strong> What matters for precision is how many examples there are, and especially how many of the rare class, in the test set.</li>
+    <li><strong>With little data, cross-validate.</strong> Every row is used for testing exactly once and for training the rest of the time, and you average the scores.</li>
+    <li><strong>Keep a separate final test set</strong> if you also tune the model on the validation score, and look at it once.</li>
+    <li><strong>Retrain on everything at the end.</strong> After evaluation, the model you ship can use the test rows too.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A team has 2,000 labelled support tickets. A 95/5 split gives 100 test tickets, and the accuracy score swings by several points between random splits, so they can't tell whether a new model is really better. At 80/20 the score is steady enough to compare models. They later run 5-fold cross-validation for the final comparison and retrain the winner on all 2,000.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>The curves here are a model.</strong> The learning curve shape and the "defensible error" combination are simplified. Real learning curves depend on the model, and the right split depends on your goals.</li>
+    <li><strong>Leakage ruins everything.</strong> Duplicates, the same customer in both sets or time-ordered data split at random make the score look better than reality. Split by customer or by date where that matches how the model will be used.</li>
+    <li><strong>Reusing the test set wears it out.</strong> Every time you choose a model by its test score, the score becomes a little optimistic.</li>
+    <li>Related: how complex a model to fit is the <a href="bias-variance.html">bias vs. variance</a> question, and the margin on a test score is the same kind of uncertainty as in <a href="significance-power.html">significance vs. power</a> and <a href="exact-approximate.html">exact vs. approximate</a>.</li>
+  </ul>
+</section>

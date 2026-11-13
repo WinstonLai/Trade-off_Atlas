@@ -1,0 +1,30 @@
+<!--meta {"title": "File size: many small files vs. few large files", "cat": "de", "lede": "Small files let a query skip precisely but add a fixed cost to open each one. Large files read efficiently but force a query to read more than it needs. The best size depends on what the queries do.", "vs": ["Per-file overhead", "Skipping precision"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>In a data lake or lakehouse a table is stored as many files, and every query has to open the files it needs. Opening a file has a <strong>fixed cost</strong>: listing it, fetching its metadata, scheduling a task, reading the footer. With very small files, that cost is paid over and over, and it can be bigger than the cost of reading the data. This is the <em>small files problem</em>, common after streaming ingestion or over-fine partitioning.</p>
+  <p>Very large files go wrong the other way. A query can skip a file only as a whole, so when it wants a few rows from many places it still has to read every file that contains one of them. <strong>The larger the file, the more it reads that it doesn't need.</strong> Between the two the cost curve is U-shaped, and its lowest point moves with the workload. Selective lookups favour smaller files, while large scans favour larger ones. Platforms reflect this: for example, Microsoft Fabric's documentation describes a target of about 128 MB for small tables, growing to about 1 GB for very large ones.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Look at the queries.</strong> Mostly dashboards over large ranges can use big files. Many point lookups and narrow filters want smaller ones plus clustering or sorting on the filtered column.</li>
+    <li><strong>Compact regularly.</strong> Streaming and frequent small writes produce many small files, and periodic compaction (or auto-compaction) merges them.</li>
+    <li><strong>Partition coarsely.</strong> Partitioning by a high-cardinality column multiplies the number of small files. Partition by something like date and cluster on the rest.</li>
+    <li><strong>Check the file count and average size</strong> in table metadata. A table with millions of files of a few megabytes is the usual warning sign.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A streaming job writes a new file every few seconds, and after a month a table has 3 million files averaging 2 MB. A report that scans one week takes minutes, most of it spent listing and opening files. A nightly job compacts each day into files of about 256 MB. The same report drops to seconds, and storage listing costs fall as well.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>The costs here are a model.</strong> Real per-file overhead, throughput and skipping depend on the engine, the format and the storage layer. Rules of thumb like "128 MB to 1 GB" are starting points to benchmark, not constants.</li>
+    <li><strong>Compaction isn't free.</strong> It rewrites data, and raising the target size later rewrites files that were already compacted.</li>
+    <li><strong>Large files make small updates expensive.</strong> Changing one row can mean rewriting a whole file, which matters for tables with frequent merges.</li>
+    <li>Related: the same U-shape of fixed cost against waiting cost appears in <a href="batch-size.html">batch size</a>, and how you split data by key is covered in <a href="partitioning.html">hash vs. range partitioning</a> and <a href="row-column.html">row vs. column storage</a>.</li>
+  </ul>
+</section>

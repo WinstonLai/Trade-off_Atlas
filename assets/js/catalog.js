@@ -12,7 +12,7 @@ window.CATALOG = [
   {
     slug: "project-triangle", cat: "pm", title: "Project management triangle",
     summary: "Scope, time and cost are linked. Fix one and changing another forces the third to move.",
-    factors: ["Scope", "Time", "Cost"], related: ["brooks-law", "technical-debt", "utilization-flow"],
+    factors: ["Scope", "Time", "Cost"], related: ["brooks-law", "technical-debt", "safety-buffers"],
     glyph: '<path d="M28 8 50 46H6Z" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><circle cx="28" cy="8" r="4" fill="currentColor"/><circle cx="50" cy="46" r="4" fill="currentColor"/><circle cx="6" cy="46" r="4" fill="currentColor"/>'
   },
   {
@@ -30,19 +30,19 @@ window.CATALOG = [
   {
     slug: "specialist-generalist", cat: "pm", title: "Specialist vs. generalist",
     summary: "Specialists are faster at their own kind of work. Generalists keep work flowing when demand shifts or someone is away.",
-    factors: ["Depth", "Flexibility", "Resilience"], related: ["utilization-flow", "brooks-law", "project-triangle"],
+    factors: ["Depth", "Flexibility", "Resilience"], related: ["utilization-flow", "brooks-law", "control-autonomy"],
     glyph: '<path d="M8 12h40M28 12v38" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><path d="M8 12v8M48 12v8" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".5"/>'
   },
   {
     slug: "batch-size", cat: "pm", title: "Batch size: setup cost vs. holding cost",
     summary: "Big batches spread the fixed cost of each release, but finished work waits longer. The total cost is lowest in between.",
-    factors: ["Setup cost", "Holding cost", "Batch size"], related: ["utilization-flow", "wip-focus", "batch-streaming"],
+    factors: ["Setup cost", "Holding cost", "Batch size"], related: ["utilization-flow", "file-size", "batch-streaming"],
     glyph: '<path d="M6 8C12 52 44 52 50 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M6 8C8 26 14 36 18 40M50 8C48 26 42 36 38 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 6" opacity=".5"/><circle cx="28" cy="43" r="4.5" fill="currentColor"/>'
   },
   {
     slug: "wip-focus", cat: "pm", title: "Parallel work vs. focus (WIP limits)",
     summary: "Starting more things at once feels productive, but every switch costs time and delays all of them. Limiting work in progress finishes more, sooner.",
-    factors: ["Tasks in flight", "Context switching", "Cycle time"], related: ["utilization-flow", "batch-size", "specialist-generalist"],
+    factors: ["Tasks in flight", "Context switching", "Cycle time"], related: ["utilization-flow", "batch-size", "safety-buffers"],
     glyph: '<g fill="currentColor" fill-opacity=".15" stroke="currentColor" stroke-width="2.5"><rect x="8" y="30" width="40" height="8" rx="2.5"/><rect x="8" y="41" width="40" height="8" rx="2.5"/></g><rect x="8" y="14" width="40" height="8" rx="2.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="4 4" opacity=".5"/><path d="M4 26h48" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>'
   },
   {
@@ -50,6 +50,18 @@ window.CATALOG = [
     summary: "Waiting gives better information but costs time. How long to wait depends on how expensive it is to undo the decision.",
     factors: ["Information", "Cost of delay", "Reversibility"], related: ["speed-consensus", "project-triangle", "technical-debt"],
     glyph: '<rect x="12" y="6" width="26" height="44" rx="3" fill="currentColor" fill-opacity=".1" stroke="currentColor" stroke-width="2.5"/><path d="M38 6 52 12v38L38 50Z" fill="currentColor" fill-opacity=".3" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><circle cx="46" cy="30" r="2" fill="currentColor"/>'
+  },
+  {
+    slug: "safety-buffers", cat: "pm", title: "Safety buffers: padding every task vs. pooling one buffer",
+    summary: "Padding each task adds up and gets used up. One shared buffer protects the same deadline with far fewer days, if it is guarded.",
+    factors: ["Padding inside tasks", "Pooled buffer", "Tasks in the chain"], related: ["project-triangle", "utilization-flow", "wip-focus"],
+    glyph: '<g fill="currentColor"><rect x="4" y="10" width="8" height="11" rx="2"/><rect x="12" y="10" width="6" height="11" rx="2" opacity=".3"/><rect x="20" y="10" width="8" height="11" rx="2"/><rect x="28" y="10" width="6" height="11" rx="2" opacity=".3"/><rect x="36" y="10" width="8" height="11" rx="2"/><rect x="44" y="10" width="6" height="11" rx="2" opacity=".3"/><rect x="4" y="34" width="8" height="11" rx="2"/><rect x="14" y="34" width="8" height="11" rx="2"/><rect x="24" y="34" width="8" height="11" rx="2"/><rect x="34" y="34" width="9" height="11" rx="2" opacity=".3"/></g>'
+  },
+  {
+    slug: "control-autonomy", cat: "pm", title: "Control vs. autonomy (delegation)",
+    summary: "Reviewing more catches more mistakes but makes everything wait. The right level of oversight depends on experience and the cost of errors.",
+    factors: ["Oversight", "Speed", "Mistakes"], related: ["speed-consensus", "specialist-generalist", "proxy-metrics"],
+    glyph: '<rect x="6" y="14" width="44" height="28" rx="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="3 4"/><path d="M12 28h32" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".4"/><circle cx="22" cy="28" r="7" fill="currentColor"/>'
   },
   {
     slug: "brevity-completeness", cat: "bc", title: "Brevity vs. completeness",
@@ -60,13 +72,13 @@ window.CATALOG = [
   {
     slug: "speed-consensus", cat: "bc", title: "Speed vs. consensus",
     summary: "Involving more people builds buy-in but slows the decision. Match inclusion to how reversible the choice is.",
-    factors: ["Stakeholders", "Buy-in", "Decision time"], related: ["brooks-law", "candour-diplomacy", "commit-optionality"],
+    factors: ["Stakeholders", "Buy-in", "Decision time"], related: ["control-autonomy", "candour-diplomacy", "commit-optionality"],
     glyph: '<circle cx="28" cy="28" r="9" fill="currentColor"/><g fill="currentColor" opacity=".45"><circle cx="28" cy="7" r="5"/><circle cx="48" cy="22" r="5"/><circle cx="41" cy="46" r="5"/><circle cx="15" cy="46" r="5"/><circle cx="8" cy="22" r="5"/></g>'
   },
   {
     slug: "candour-diplomacy", cat: "bc", title: "Candour vs. diplomacy",
     summary: "Direct feedback is clear but can strain trust. Caring about the person lets you be direct without damage.",
-    factors: ["Directness", "Care", "Clarity"], related: ["brevity-completeness", "speed-consensus", "claim-create"],
+    factors: ["Directness", "Care", "Clarity"], related: ["tell-ask", "speed-consensus", "claim-create"],
     glyph: '<rect x="6" y="6" width="44" height="44" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M28 6v44M6 28h44" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="28" y="6" width="22" height="22" fill="currentColor" fill-opacity=".2"/><circle cx="40" cy="16" r="5" fill="currentColor"/>'
   },
   {
@@ -84,19 +96,31 @@ window.CATALOG = [
   {
     slug: "jargon-plain-language", cat: "bc", title: "Precision vs. plain language",
     summary: "Technical terms are exact, but only to readers who know them. The right level depends on who is reading.",
-    factors: ["Precision", "Comprehension", "Audience"], related: ["brevity-completeness", "candour-diplomacy", "sync-async"],
+    factors: ["Precision", "Comprehension", "Audience"], related: ["brevity-completeness", "candour-diplomacy", "repetition-fatigue"],
     glyph: '<path d="M18 8c-6 0-6 4-6 8v5c0 4-3 5-5 7 2 2 5 3 5 7v5c0 4 0 8 6 8M38 8c6 0 6 4 6 8v5c0 4 3 5 5 7-2 2-5 3-5 7v5c0 4 0 8-6 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="28" cy="28" r="4" fill="currentColor"/>'
   },
   {
     slug: "reach-relevance", cat: "bc", title: "Reach vs. relevance (broadcast vs. targeted)",
     summary: "Sending to everyone misses nobody but spends everyone's attention. Targeting protects attention if you know who needs to know.",
-    factors: ["Reach", "Relevance", "Attention"], related: ["brevity-completeness", "sync-async", "speed-consensus"],
+    factors: ["Reach", "Relevance", "Attention"], related: ["brevity-completeness", "sync-async", "repetition-fatigue"],
     glyph: '<g fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="28" cy="28" r="22" opacity=".35"/><circle cx="28" cy="28" r="14" opacity=".65"/><circle cx="28" cy="28" r="6"/></g><circle cx="28" cy="28" r="2.5" fill="currentColor"/><g fill="currentColor" opacity=".4"><circle cx="6" cy="10" r="2.5"/><circle cx="50" cy="8" r="2.5"/><circle cx="52" cy="48" r="2.5"/><circle cx="5" cy="46" r="2.5"/></g>'
+  },
+  {
+    slug: "repetition-fatigue", cat: "bc", title: "Repetition vs. fatigue",
+    summary: "Said once, a message is easily missed. Said too often in the same words, it is tuned out. Varying the delivery moves the sweet spot.",
+    factors: ["Repetition", "Understanding", "Fatigue"], related: ["brevity-completeness", "reach-relevance", "jargon-plain-language"],
+    glyph: '<circle cx="10" cy="28" r="5" fill="currentColor"/><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M22 20a11 11 0 0 1 0 16"/><path d="M30 14a19 19 0 0 1 0 28" opacity=".6"/><path d="M38 8a27 27 0 0 1 0 40" opacity=".3"/></g>'
+  },
+  {
+    slug: "tell-ask", cat: "bc", title: "Telling vs. asking",
+    summary: "Telling is fast and clear but teaches you nothing. Asking brings in information and buy-in but can leave people unsure what you think.",
+    factors: ["Telling (advocacy)", "Asking (inquiry)", "Buy-in"], related: ["candour-diplomacy", "speed-consensus", "control-autonomy"],
+    glyph: '<path d="M14 8v24" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><circle cx="14" cy="44" r="3.5" fill="currentColor"/><path d="M32 20a8 8 0 1 1 12 7c-3 2-4 3-4 7" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/><circle cx="40" cy="44" r="3.5" fill="currentColor" opacity=".6"/>'
   },
   {
     slug: "technical-debt", cat: "sw", title: "Technical debt",
     summary: "Shortcuts buy speed today and charge interest later. Every future change gets slower.",
-    factors: ["Speed now", "Speed later", "Quality"], related: ["flexibility-simplicity", "project-triangle", "normalization"],
+    factors: ["Speed now", "Speed later", "Quality"], related: ["flexibility-simplicity", "project-triangle", "build-buy"],
     glyph: '<path d="M6 48h44M6 48V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".5"/><path d="M8 44 48 12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M8 44C16 26 26 20 48 22" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="4 4" stroke-linecap="round" opacity=".6"/>'
   },
   {
@@ -120,13 +144,13 @@ window.CATALOG = [
   {
     slug: "monolith-microservices", cat: "sw", title: "Monolith vs. microservices",
     summary: "Splitting a system lets teams ship independently, but turns function calls into network calls and adds more to operate.",
-    factors: ["Team autonomy", "Operational complexity", "Coordination"], related: ["brooks-law", "flexibility-simplicity", "cap-theorem"],
+    factors: ["Team autonomy", "Operational complexity", "Coordination"], related: ["brooks-law", "flexibility-simplicity", "retries-load"],
     glyph: '<rect x="4" y="10" width="22" height="36" rx="3" fill="currentColor" fill-opacity=".15" stroke="currentColor" stroke-width="2.5"/><g fill="currentColor"><rect x="33" y="8" width="9" height="9" rx="2"/><rect x="45" y="8" width="9" height="9" rx="2" opacity=".6"/><rect x="33" y="24" width="9" height="9" rx="2" opacity=".6"/><rect x="45" y="24" width="9" height="9" rx="2"/><rect x="33" y="40" width="9" height="9" rx="2"/><rect x="45" y="40" width="9" height="9" rx="2" opacity=".6"/></g>'
   },
   {
     slug: "latency-throughput", cat: "sw", title: "Latency vs. throughput",
     summary: "Batching shares fixed overhead and lets a system do more per second, but every item waits for its batch.",
-    factors: ["Latency", "Throughput", "Batch size"], related: ["time-space", "utilization-flow", "batch-streaming"],
+    factors: ["Latency", "Throughput", "Batch size"], related: ["retries-load", "utilization-flow", "batch-streaming"],
     glyph: '<rect x="4" y="16" width="48" height="24" rx="12" fill="currentColor" fill-opacity=".1" stroke="currentColor" stroke-width="2.5"/><g fill="currentColor"><circle cx="16" cy="28" r="3.5"/><circle cx="26" cy="28" r="3.5"/><circle cx="36" cy="28" r="3.5" opacity=".6"/><circle cx="46" cy="28" r="3.5" opacity=".3"/></g><path d="M20 8h16M20 48h16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>'
   },
   {
@@ -142,9 +166,21 @@ window.CATALOG = [
     glyph: '<rect x="12" y="26" width="32" height="24" rx="4" fill="currentColor" fill-opacity=".15" stroke="currentColor" stroke-width="2.5"/><path d="M19 26v-7a9 9 0 0 1 18 0v7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="28" cy="36" r="3" fill="currentColor"/><path d="M28 38v5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>'
   },
   {
+    slug: "build-buy", cat: "sw", title: "Build vs. buy",
+    summary: "Buying is cheap to start and keeps costing as your needs drift from the product. Building costs up front and in upkeep. The break-even depends on fit, horizon and overruns.",
+    factors: ["Upfront cost", "Ongoing cost", "Fit"], related: ["technical-debt", "monolith-microservices", "project-triangle"],
+    glyph: '<path d="M6 12 50 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M6 44 50 14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".55"/><circle cx="36.6" cy="23" r="5" fill="currentColor"/>'
+  },
+  {
+    slug: "retries-load", cat: "sw", title: "Retries: resilience vs. load amplification",
+    summary: "Retrying hides brief failures from users. When a backend is already struggling, retries multiply its load and can turn a slowdown into an outage.",
+    factors: ["Resilience", "Load amplification", "Failure rate"], related: ["latency-throughput", "utilization-flow", "cap-theorem"],
+    glyph: '<path d="M44 20a17 17 0 1 0 3 12" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M46 8v14H32" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="28" cy="30" r="4" fill="currentColor"/>'
+  },
+  {
     slug: "batch-streaming", cat: "de", title: "Batch vs. streaming",
     summary: "Fresher data costs more to run and is harder to get right.",
-    factors: ["Latency", "Cost", "Complexity"], related: ["exact-approximate", "utilization-flow", "batch-size"],
+    factors: ["Latency", "Cost", "Complexity"], related: ["exact-approximate", "delivery-guarantees", "batch-size"],
     glyph: '<g fill="currentColor"><circle cx="8" cy="16" r="3"/><circle cx="18" cy="16" r="3"/><circle cx="28" cy="16" r="3"/><circle cx="38" cy="16" r="3"/><circle cx="48" cy="16" r="3"/></g><path d="M8 32h40l-4 16H12Z" fill="currentColor" fill-opacity=".15" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><g fill="currentColor" opacity=".6"><circle cx="20" cy="41" r="3"/><circle cx="28" cy="41" r="3"/><circle cx="36" cy="41" r="3"/></g>'
   },
   {
@@ -180,19 +216,31 @@ window.CATALOG = [
   {
     slug: "partitioning", cat: "de", title: "Hash vs. range partitioning",
     summary: "Splitting by key range keeps neighbours together but concentrates bursts. Splitting by hash spreads load but scatters range queries.",
-    factors: ["Even load", "Range queries", "Hot spots"], related: ["cap-theorem", "row-column", "quorum-consistency"],
+    factors: ["Even load", "Range queries", "Hot spots"], related: ["cap-theorem", "row-column", "file-size"],
     glyph: '<rect x="5" y="8" width="46" height="40" rx="3.5" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M17 8v40M28 8v40M39 8v40" stroke="currentColor" stroke-width="2" opacity=".5"/><g fill="currentColor"><rect x="30" y="14" width="8" height="26" rx="1.5" opacity=".35"/><circle cx="11" cy="18" r="3"/><circle cx="23" cy="34" r="3"/><circle cx="45" cy="22" r="3"/><circle cx="34" cy="42" r="3"/></g>'
+  },
+  {
+    slug: "file-size", cat: "de", title: "File size: many small files vs. few large files",
+    summary: "Small files skip precisely but cost a fixed overhead to open each one. Large files read efficiently but force queries to read more than they need.",
+    factors: ["Per-file overhead", "Skipping precision", "File size"], related: ["partitioning", "row-column", "batch-size"],
+    glyph: '<g fill="currentColor"><rect x="4" y="14" width="7" height="7" rx="1.5"/><rect x="13" y="14" width="7" height="7" rx="1.5"/><rect x="22" y="14" width="7" height="7" rx="1.5"/><rect x="4" y="23" width="7" height="7" rx="1.5"/><rect x="13" y="23" width="7" height="7" rx="1.5"/><rect x="22" y="23" width="7" height="7" rx="1.5"/><rect x="4" y="32" width="7" height="7" rx="1.5"/><rect x="13" y="32" width="7" height="7" rx="1.5"/><rect x="22" y="32" width="7" height="7" rx="1.5"/></g><rect x="35" y="14" width="17" height="25" rx="3" fill="currentColor" fill-opacity=".15" stroke="currentColor" stroke-width="2.5"/><path d="M4 48h48" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".4"/>'
+  },
+  {
+    slug: "delivery-guarantees", cat: "de", title: "Delivery guarantees: at most once, at least once, exactly once",
+    summary: "When a send can fail halfway, you can accept losses, accept duplicates, or pay extra to avoid both. Each choice moves the problem somewhere else.",
+    factors: ["Lost events", "Duplicates", "Cost"], related: ["batch-streaming", "retries-load", "cap-theorem"],
+    glyph: '<rect x="4" y="12" width="40" height="28" rx="4" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="2.5"/><path d="M5 16 24 30 43 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><circle cx="42" cy="40" r="10" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M37 40l4 4 7-8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'
   },
   {
     slug: "bias-variance", cat: "ds", title: "Bias vs. variance",
     summary: "A simple model misses the pattern. A flexible one memorises the noise. Error on new data is lowest in between.",
-    factors: ["Model complexity", "Generalisation", "Data volume"], related: ["accuracy-interpretability", "precision-recall", "flexibility-simplicity"],
+    factors: ["Model complexity", "Generalisation", "Data volume"], related: ["accuracy-interpretability", "train-test-split", "flexibility-simplicity"],
     glyph: '<path d="M6 44C14 40 20 14 28 24S44 8 50 12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><g fill="currentColor"><circle cx="11" cy="40" r="3.2"/><circle cx="22" cy="22" r="3.2"/><circle cx="33" cy="28" r="3.2"/><circle cx="44" cy="12" r="3.2"/></g>'
   },
   {
     slug: "precision-recall", cat: "ds", title: "Precision vs. recall",
     summary: "Flag more and you catch more real cases, but more of your flags are wrong. Where to draw the line depends on which mistake costs more.",
-    factors: ["Precision", "Recall", "Cost of errors"], related: ["bias-variance", "exact-approximate", "significance-power"],
+    factors: ["Precision", "Recall", "Cost of errors"], related: ["bias-variance", "proxy-metrics", "significance-power"],
     glyph: '<path d="M3 46C9 46 12 12 19 12S29 46 36 46" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M20 46C26 46 29 24 36 24S46 46 53 46" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".6"/><path d="M30 6v44" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>'
   },
   {
@@ -204,7 +252,7 @@ window.CATALOG = [
   {
     slug: "significance-power", cat: "ds", title: "Significance vs. power (Type I vs. Type II errors)",
     summary: "A test can raise a false alarm or miss a real effect. Making it stricter against one makes the other more likely, unless you collect more data.",
-    factors: ["False alarms", "Missed effects", "Sample size"], related: ["precision-recall", "bias-variance", "exact-approximate"],
+    factors: ["False alarms", "Missed effects", "Sample size"], related: ["precision-recall", "bias-variance", "train-test-split"],
     glyph: '<path d="M28 38 20 50h16Z" fill="currentColor"/><path d="M6 36 50 22" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><circle cx="8" cy="30" r="6" fill="currentColor" fill-opacity=".2" stroke="currentColor" stroke-width="2.5"/><circle cx="48" cy="16" r="6" fill="currentColor"/>'
   },
   {
@@ -218,5 +266,17 @@ window.CATALOG = [
     summary: "Flexible models predict better but are harder to explain. How much that matters depends on the stakes of the decision.",
     factors: ["Accuracy", "Explainability", "Stakes"], related: ["bias-variance", "flexibility-simplicity", "jargon-plain-language"],
     glyph: '<rect x="4" y="12" width="24" height="32" rx="3.5" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 22h12M10 30h12M10 38h7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".6"/><rect x="32" y="12" width="20" height="32" rx="3.5" fill="currentColor"/>'
+  },
+  {
+    slug: "train-test-split", cat: "ds", title: "Training data vs. test data (the split)",
+    summary: "Every row held back for testing is a row the model can't learn from. Too few and the score is noise. Too many and the model being scored is weaker.",
+    factors: ["Training data", "Test data", "Score precision"], related: ["bias-variance", "significance-power", "exact-approximate"],
+    glyph: '<rect x="4" y="10" width="34" height="36" rx="3" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2.5"/><g fill="currentColor" opacity=".5"><circle cx="13" cy="21" r="2.5"/><circle cx="24" cy="18" r="2.5"/><circle cx="30" cy="30" r="2.5"/><circle cx="16" cy="36" r="2.5"/></g><rect x="42" y="10" width="10" height="36" rx="3" fill="currentColor"/>'
+  },
+  {
+    slug: "proxy-metrics", cat: "ds", title: "Proxy metrics vs. the real goal (Goodhart's law)",
+    summary: "We measure what's easy as a stand-in for what we want. Push hard on the stand-in and the two come apart: the number rises while the result stalls or falls.",
+    factors: ["The metric", "The real goal", "Pressure"], related: ["precision-recall", "explore-exploit", "control-autonomy"],
+    glyph: '<path d="M6 46 50 10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M6 46C22 30 30 24 36 28S46 40 50 50" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 4" opacity=".6"/><circle cx="50" cy="10" r="4" fill="currentColor"/>'
   }
 ];

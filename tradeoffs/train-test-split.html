@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Training data vs. test data (the split) · Trade-off Atlas</title>
+  <meta name="description" content="Every labelled row you hold back to test the model is a row it can&#x27;t learn from. Hold back too few and you can&#x27;t trust the score. Hold back too many and the model you&#x27;re scoring is weaker than it could be.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+</head>
+<body class="cat-ds" data-root=".." data-slug="train-test-split">
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3 25 23H3Z" fill="none" stroke="var(--pm)" stroke-width="2.6" stroke-linejoin="round"/><circle cx="14" cy="16" r="3.4" fill="var(--sw)"/></svg>
+        Trade-off Atlas
+      </a>
+      <div class="site-nav">
+        <button class="theme-toggle" type="button" aria-label="Toggle theme"></button>
+      </div>
+    </div>
+    <nav class="cat-nav" aria-label="Browse by topic">
+      <div class="wrap">
+        <a href="../index.html">All topics</a>
+        <a class="cat-pm" href="../index.html#pm"><span class="dot"></span>Project management</a>
+        <a class="cat-bc" href="../index.html#bc"><span class="dot"></span>Business communication</a>
+        <a class="cat-sw" href="../index.html#sw"><span class="dot"></span>Software development</a>
+        <a class="cat-de" href="../index.html#de"><span class="dot"></span>Data engineering</a>
+        <a class="cat-ds" href="../index.html#ds"><span class="dot"></span>Data science</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All trade-offs</a> / <a href="../index.html#ds">Data science</a></nav>
+    <header class="hero">
+      <span class="tag">Data science</span>
+      <h1>Training data vs. test data (the split)</h1>
+      <p class="lede">Every labelled row you hold back to test the model is a row it can't learn from. Hold back too few and you can't trust the score. Hold back too many and the model you're scoring is weaker than it could be.</p>
+      <div class="vs"><span>Training data</span><i>vs.</i><span>Test data</span></div>
+    </header>
+
+    <figure class="anim" id="anim"><noscript><p style="padding:20px">Turn on JavaScript to see the animation.</p></noscript></figure>
+
+    <article class="prose">
+      <section>
+        <h2>The trade-off</h2>
+        <p>To know how well a model works on new data you have to try it on rows it hasn't seen. But the same rows can't also train it. A split divides a fixed pool of labelled data between two jobs that both want more of it:</p>
+        <ul>
+          <li><strong>More training data</strong> lowers the model's error, with diminishing returns (the learning curve).</li>
+          <li><strong>More test data</strong> makes the score more precise. The margin of error shrinks roughly with the square root of the number of test rows.</li>
+        </ul>
+        <p>A small test set gives a noisy score: a model that looks good might just have been lucky on 100 rows. A small training set gives a weaker model. The total uncertainty is lowest somewhere in the middle, but the curve is flat across a wide range, so the exact percentage matters less than avoiding the extremes. With very little data no split works well, and with a lot of data almost any sensible one does.</p>
+      </section>
+      <section>
+        <h2>How to use it</h2>
+        <ol>
+          <li><strong>Start with a conventional split</strong> (roughly 70/30 to 90/10, depending on size). It is rarely badly wrong.</li>
+          <li><strong>Count test rows, not percentages.</strong> What matters for precision is how many examples there are, and especially how many of the rare class, in the test set.</li>
+          <li><strong>With little data, cross-validate.</strong> Every row is used for testing exactly once and for training the rest of the time, and you average the scores.</li>
+          <li><strong>Keep a separate final test set</strong> if you also tune the model on the validation score, and look at it once.</li>
+          <li><strong>Retrain on everything at the end.</strong> After evaluation, the model you ship can use the test rows too.</li>
+        </ol>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <div class="callout">
+          <p>A team has 2,000 labelled support tickets. A 95/5 split gives 100 test tickets, and the accuracy score swings by several points between random splits, so they can't tell whether a new model is really better. At 80/20 the score is steady enough to compare models. They later run 5-fold cross-validation for the final comparison and retrain the winner on all 2,000.</p>
+        </div>
+      </section>
+      <section>
+        <h2>Watch out for</h2>
+        <ul>
+          <li><strong>The curves here are a model.</strong> The learning curve shape and the "defensible error" combination are simplified. Real learning curves depend on the model, and the right split depends on your goals.</li>
+          <li><strong>Leakage ruins everything.</strong> Duplicates, the same customer in both sets or time-ordered data split at random make the score look better than reality. Split by customer or by date where that matches how the model will be used.</li>
+          <li><strong>Reusing the test set wears it out.</strong> Every time you choose a model by its test score, the score becomes a little optimistic.</li>
+          <li>Related: how complex a model to fit is the <a href="bias-variance.html">bias vs. variance</a> question, and the margin on a test score is the same kind of uncertainty as in <a href="significance-power.html">significance vs. power</a> and <a href="exact-approximate.html">exact vs. approximate</a>.</li>
+        </ul>
+      </section>
+    </article>
+
+    <nav class="related" id="related" aria-label="Related trade-offs"></nav>
+    <nav class="pager" id="pager" aria-label="More trade-offs"></nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Trade-off Atlas: mental models for better decisions. Models are simplified on purpose. Use them to frame the conversation, not to forecast.</p></div>
+  </footer>
+
+  <script src="../assets/js/catalog.js"></script>
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/engine.js"></script>
+  <script src="../assets/js/anim/train-test-split.js"></script>
+</body>
+</html>

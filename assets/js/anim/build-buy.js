@@ -33,9 +33,10 @@
       var b1 = seg(rowBuy, "var(--s1)", 1), b2 = seg(rowBuy, "var(--s2)", 0.55), b3 = seg(rowBuy, "var(--bad)", 0.45);
       var c1 = seg(rowBuild, "var(--s1)", 1), c2 = seg(rowBuild, "var(--s2)", 0.55);
       var lg = [["var(--s1)", 1, "one-off cost"], ["var(--s2)", 0.55, "licences / upkeep"], ["var(--bad)", 0.45, "workarounds"]];
+      var lgx = [0, 96, 232];
       lg.forEach(function (l, i) {
-        el("rect", { x: x0 + i * 116, y: 190, width: 10, height: 10, rx: 2, fill: l[0], opacity: l[1] }, svg);
-        el("text", { x: x0 + i * 116 + 15, y: 199, "class": "t-small", text: l[2] }, svg);
+        el("rect", { x: x0 + lgx[i], y: 190, width: 10, height: 10, rx: 2, fill: l[0], opacity: l[1] }, svg);
+        el("text", { x: x0 + lgx[i] + 15, y: 199, "class": "t-small", text: l[2] }, svg);
       });
 
       var big = el("text", { x: x0, y: 244, "class": "t-big" }, svg);

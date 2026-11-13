@@ -48,7 +48,7 @@
       var pB = el("path", { fill: "none", stroke: "var(--ink)", "stroke-width": 3 }, C.g);
       var bestLine = el("line", { y1: 0, y2: C.h, stroke: "var(--good)", "stroke-width": 2, "stroke-dasharray": "4 4" }, C.g);
       var mk = el("circle", { r: 6.5, fill: "var(--ink)", stroke: "var(--surface)", "stroke-width": 2.5 }, C.g);
-      [["var(--s1)", "model's true error", 0, 0], ["var(--s2)", "test margin (±)", 1, 0], ["var(--ink)", "error you could defend", 0, 1]].forEach(function (l) {
+      [["var(--s1)", "true error", 0, 0], ["var(--s2)", "test margin (±)", 1, 0], ["var(--ink)", "error you could defend", 0, 1]].forEach(function (l) {
         var lx = 392 + l[2] * 124, ly = 252 + l[3] * 20;
         el("path", { d: "M" + lx + " " + ly + "h14", stroke: l[0], "stroke-width": l[0] === "var(--ink)" ? 3 : 2, "stroke-linecap": "round" }, svg);
         el("text", { x: lx + 20, y: ly + 4, "class": "t-small", text: l[1] }, svg);

@@ -54,9 +54,9 @@
       var pS = el("path", { fill: "none", stroke: "var(--ink)", "stroke-width": 3 }, C.g);
       var bestLine = el("line", { y1: 0, y2: C.h, stroke: "var(--good)", "stroke-width": 2, "stroke-dasharray": "4 4" }, C.g);
       var mk = el("circle", { r: 6.5, fill: "var(--ink)", stroke: "var(--surface)", "stroke-width": 2.5 }, C.g);
-      var legend = [["var(--s1)", "what you know"], ["var(--s3)", "buy-in"], ["var(--s2)", "clarity of view"], ["var(--ink)", "overall outcome"]];
+      var legend = [["var(--s1)", "what you know"], ["var(--s3)", "buy-in"], ["var(--s2)", "clarity of view"], ["var(--ink)", "outcome"]];
       legend.forEach(function (l, i) {
-        var lx = 392 + (i % 2) * 112, ly = 262 + Math.floor(i / 2) * 20;
+        var lx = 392 + (i % 2) * 124, ly = 262 + Math.floor(i / 2) * 20;
         el("path", { d: "M" + lx + " " + ly + "h14", stroke: l[0], "stroke-width": i === 3 ? 3 : 2, "stroke-linecap": "round" }, svg);
         el("text", { x: lx + 20, y: ly + 4, "class": "t-small", text: l[1] }, svg);
       });

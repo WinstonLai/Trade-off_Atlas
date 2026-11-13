@@ -38,7 +38,7 @@
       el("rect", { x: x0, y: 58, width: W, height: 36, rx: 3, fill: "var(--surface-2)" }, svg);
       var strip = el("rect", { x: x0, y: 58, width: W, height: 36, rx: 3, fill: "url(#fs-pat)", stroke: "var(--line)", "stroke-width": 1.5 }, svg);
       for (var j = 0; j < POS.length; j++) read.push(el("rect", { y: 100, height: 10, rx: 2, fill: "var(--s2)" }, svg));
-      el("text", { x: x0, y: 130, "class": "t-small", text: "blue = the rows the query wants · orange = the whole files it has to read" }, svg);
+      el("text", { x: x0, y: 130, "class": "t-small", text: "blue = rows wanted · orange = files read" }, svg);
 
       var big = el("text", { x: x0, y: 190, "class": "t-big" }, svg);
       var sub = el("text", { x: x0, y: 214, "class": "t-small" }, svg);

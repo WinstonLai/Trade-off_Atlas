@@ -36,7 +36,7 @@
       var labR = el("text", { x: x0, y: 124, "class": "t-label" }, svg);
       var valR = el("text", { x: x0 + W, y: 124, "text-anchor": "end", "class": "t-label" }, svg);
       var bR = bar(132, "var(--s2)");
-      el("path", { d: "M" + zx + " 50V168", stroke: "var(--ink)", "stroke-width": 2, "stroke-dasharray": "3 3" }, svg);
+      el("path", { d: "M" + zx + " 58V92M" + zx + " 128V162", stroke: "var(--ink)", "stroke-width": 2, "stroke-dasharray": "3 3" }, svg);
       el("text", { x: zx, y: 182, "text-anchor": "middle", "class": "t-small", text: "where you started" }, svg);
 
       var big = el("text", { x: x0, y: 226, "class": "t-big" }, svg);

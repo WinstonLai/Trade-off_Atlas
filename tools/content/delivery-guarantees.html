@@ -1,0 +1,35 @@
+<!--meta {"title": "Delivery guarantees: at most once, at least once, exactly once", "cat": "de", "lede": "When a message or write can fail halfway, you can accept losing some, accept duplicates, or pay extra to avoid both. Each choice moves the problem somewhere else.", "vs": ["Correctness", "Cost and complexity"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>A sender can't always tell whether a message arrived. If the reply is lost, the message might have been written or might not. The sender then has to pick a policy:</p>
+  <ul>
+    <li><strong>At most once:</strong> don't retry. Simple and cheap, but anything that failed is lost.</li>
+    <li><strong>At least once:</strong> retry until acknowledged. Nothing is lost, but if only the acknowledgement was lost, the event arrives twice.</li>
+    <li><strong>Exactly once:</strong> retry, and also make repeats harmless. This is correct, but needs more machinery: idempotent writes, deduplication keys, or transactions.</li>
+  </ul>
+  <p>In practice, "exactly once" means <em>at-least-once delivery combined with idempotent processing</em>, not a message that physically travels once. Apache Kafka, for example, builds it from idempotent producers (a repeated send is recognised and dropped) and transactions (writes and consumed offsets commit together). That is cheap for the first piece and costs more coordination for the second, and it covers only what happens inside Kafka. Effects on outside systems still need their own idempotence.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Decide what's worse: a gap or a repeat.</strong> For a click counter either is a small error. For a payment, both are serious.</li>
+    <li><strong>Default to at-least-once with idempotent consumers.</strong> Give each event a unique ID and make the receiving write safe to repeat (an upsert by key, for example).</li>
+    <li><strong>Use transactions where duplicates are expensive,</strong> and accept the extra latency and throughput cost.</li>
+    <li><strong>Make side effects idempotent too.</strong> Emails, charges and calls to other services need keys or an outbox pattern, because the pipeline's guarantee ends at its edge.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A pipeline loads order events into a warehouse. With at-most-once, a network blip silently drops a few orders and revenue reports run low. With plain at-least-once, a retry double-counts some. The team keeps at-least-once, adds the order ID as a key, and merges on it. The warehouse now has each order exactly once, and the pipeline itself stays simple.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>The costs here are illustrative.</strong> The extra work for exactly-once in the animation is a made-up number. Real overhead depends on the system and the settings, so measure it.</li>
+    <li><strong>Exactly-once has a boundary.</strong> It holds inside one system. Across systems, you need idempotent receivers or you are back to at-least-once.</li>
+    <li><strong>Ordering is a separate question.</strong> Retries can also deliver messages out of order.</li>
+    <li>Related: retries are what make at-least-once work, and they can overload a struggling service (<a href="retries-load.html">retries vs. load</a>). Faster pipelines make all of this harder (<a href="batch-streaming.html">batch vs. streaming</a>), and the underlying uncertainty is the one in the <a href="cap-theorem.html">CAP theorem</a>.</li>
+  </ul>
+</section>

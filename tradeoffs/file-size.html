@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>File size: many small files vs. few large files · Trade-off Atlas</title>
+  <meta name="description" content="Small files let a query skip precisely but add a fixed cost to open each one. Large files read efficiently but force a query to read more than it needs. The best size depends on what the queries do.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+</head>
+<body class="cat-de" data-root=".." data-slug="file-size">
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3 25 23H3Z" fill="none" stroke="var(--pm)" stroke-width="2.6" stroke-linejoin="round"/><circle cx="14" cy="16" r="3.4" fill="var(--sw)"/></svg>
+        Trade-off Atlas
+      </a>
+      <div class="site-nav">
+        <button class="theme-toggle" type="button" aria-label="Toggle theme"></button>
+      </div>
+    </div>
+    <nav class="cat-nav" aria-label="Browse by topic">
+      <div class="wrap">
+        <a href="../index.html">All topics</a>
+        <a class="cat-pm" href="../index.html#pm"><span class="dot"></span>Project management</a>
+        <a class="cat-bc" href="../index.html#bc"><span class="dot"></span>Business communication</a>
+        <a class="cat-sw" href="../index.html#sw"><span class="dot"></span>Software development</a>
+        <a class="cat-de" href="../index.html#de"><span class="dot"></span>Data engineering</a>
+        <a class="cat-ds" href="../index.html#ds"><span class="dot"></span>Data science</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All trade-offs</a> / <a href="../index.html#de">Data engineering</a></nav>
+    <header class="hero">
+      <span class="tag">Data engineering</span>
+      <h1>File size: many small files vs. few large files</h1>
+      <p class="lede">Small files let a query skip precisely but add a fixed cost to open each one. Large files read efficiently but force a query to read more than it needs. The best size depends on what the queries do.</p>
+      <div class="vs"><span>Per-file overhead</span><i>vs.</i><span>Skipping precision</span></div>
+    </header>
+
+    <figure class="anim" id="anim"><noscript><p style="padding:20px">Turn on JavaScript to see the animation.</p></noscript></figure>
+
+    <article class="prose">
+      <section>
+        <h2>The trade-off</h2>
+        <p>In a data lake or lakehouse a table is stored as many files, and every query has to open the files it needs. Opening a file has a <strong>fixed cost</strong>: listing it, fetching its metadata, scheduling a task, reading the footer. With very small files, that cost is paid over and over, and it can be bigger than the cost of reading the data. This is the <em>small files problem</em>, common after streaming ingestion or over-fine partitioning.</p>
+        <p>Very large files go wrong the other way. A query can skip a file only as a whole, so when it wants a few rows from many places it still has to read every file that contains one of them. <strong>The larger the file, the more it reads that it doesn't need.</strong> Between the two the cost curve is U-shaped, and its lowest point moves with the workload. Selective lookups favour smaller files, while large scans favour larger ones. Platforms reflect this: for example, Microsoft Fabric's documentation describes a target of about 128 MB for small tables, growing to about 1 GB for very large ones.</p>
+      </section>
+      <section>
+        <h2>How to use it</h2>
+        <ol>
+          <li><strong>Look at the queries.</strong> Mostly dashboards over large ranges can use big files. Many point lookups and narrow filters want smaller ones plus clustering or sorting on the filtered column.</li>
+          <li><strong>Compact regularly.</strong> Streaming and frequent small writes produce many small files, and periodic compaction (or auto-compaction) merges them.</li>
+          <li><strong>Partition coarsely.</strong> Partitioning by a high-cardinality column multiplies the number of small files. Partition by something like date and cluster on the rest.</li>
+          <li><strong>Check the file count and average size</strong> in table metadata. A table with millions of files of a few megabytes is the usual warning sign.</li>
+        </ol>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <div class="callout">
+          <p>A streaming job writes a new file every few seconds, and after a month a table has 3 million files averaging 2 MB. A report that scans one week takes minutes, most of it spent listing and opening files. A nightly job compacts each day into files of about 256 MB. The same report drops to seconds, and storage listing costs fall as well.</p>
+        </div>
+      </section>
+      <section>
+        <h2>Watch out for</h2>
+        <ul>
+          <li><strong>The costs here are a model.</strong> Real per-file overhead, throughput and skipping depend on the engine, the format and the storage layer. Rules of thumb like "128 MB to 1 GB" are starting points to benchmark, not constants.</li>
+          <li><strong>Compaction isn't free.</strong> It rewrites data, and raising the target size later rewrites files that were already compacted.</li>
+          <li><strong>Large files make small updates expensive.</strong> Changing one row can mean rewriting a whole file, which matters for tables with frequent merges.</li>
+          <li>Related: the same U-shape of fixed cost against waiting cost appears in <a href="batch-size.html">batch size</a>, and how you split data by key is covered in <a href="partitioning.html">hash vs. range partitioning</a> and <a href="row-column.html">row vs. column storage</a>.</li>
+        </ul>
+      </section>
+    </article>
+
+    <nav class="related" id="related" aria-label="Related trade-offs"></nav>
+    <nav class="pager" id="pager" aria-label="More trade-offs"></nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Trade-off Atlas: mental models for better decisions. Models are simplified on purpose. Use them to frame the conversation, not to forecast.</p></div>
+  </footer>
+
+  <script src="../assets/js/catalog.js"></script>
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/engine.js"></script>
+  <script src="../assets/js/anim/file-size.js"></script>
+</body>
+</html>

@@ -10,11 +10,11 @@ Each trade-off has its own page with an animation that auto-plays a short scenar
 
 | Category | Trade-offs |
 |---|---|
-| Project management | Project management triangle · Brooks's law · Utilization vs. flow · Specialist vs. generalist · Batch size · Parallel work vs. focus (WIP limits) · Commit early vs. keep options open |
-| Business communication | Brevity vs. completeness · Speed vs. consensus · Candour vs. diplomacy · Synchronous vs. asynchronous · Claiming vs. creating value · Precision vs. plain language · Reach vs. relevance |
-| Software development | Technical debt · CAP theorem · Flexibility vs. simplicity · Time vs. space (caching) · Monolith vs. microservices · Latency vs. throughput · Consistency vs. latency (quorums) · Optimistic vs. pessimistic locking |
-| Data engineering | Batch vs. streaming · Normalization vs. denormalization · Exact vs. approximate · Schema-on-write vs. schema-on-read · Row vs. column storage · Indexes: read speed vs. write cost · Hash vs. range partitioning |
-| Data science | Bias vs. variance · Precision vs. recall · Explore vs. exploit · Significance vs. power · Privacy vs. utility · Accuracy vs. interpretability |
+| Project management | Project management triangle · Brooks's law · Utilization vs. flow · Specialist vs. generalist · Batch size · Parallel work vs. focus (WIP limits) · Commit early vs. keep options open · Safety buffers: padding vs. pooling · Control vs. autonomy (delegation) |
+| Business communication | Brevity vs. completeness · Speed vs. consensus · Candour vs. diplomacy · Synchronous vs. asynchronous · Claiming vs. creating value · Precision vs. plain language · Reach vs. relevance · Repetition vs. fatigue · Telling vs. asking |
+| Software development | Technical debt · CAP theorem · Flexibility vs. simplicity · Time vs. space (caching) · Monolith vs. microservices · Latency vs. throughput · Consistency vs. latency (quorums) · Optimistic vs. pessimistic locking · Build vs. buy · Retries: resilience vs. load amplification |
+| Data engineering | Batch vs. streaming · Normalization vs. denormalization · Exact vs. approximate · Schema-on-write vs. schema-on-read · Row vs. column storage · Indexes: read speed vs. write cost · Hash vs. range partitioning · File size: many small vs. few large files · Delivery guarantees (at most / at least / exactly once) |
+| Data science | Bias vs. variance · Precision vs. recall · Explore vs. exploit · Significance vs. power · Privacy vs. utility · Accuracy vs. interpretability · Training vs. test data (the split) · Proxy metrics vs. the real goal (Goodhart's law) |
 
 Categories run from soft skills to technical ones, in the same order as the header nav and the home grid.
 

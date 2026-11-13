@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Telling vs. asking · Trade-off Atlas</title>
+  <meta name="description" content="Telling is fast and makes your view clear, but you learn nothing. Asking brings in information and builds buy-in, but too much leaves people unsure what you think. Good conversations mix both.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+</head>
+<body class="cat-bc" data-root=".." data-slug="tell-ask">
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3 25 23H3Z" fill="none" stroke="var(--pm)" stroke-width="2.6" stroke-linejoin="round"/><circle cx="14" cy="16" r="3.4" fill="var(--sw)"/></svg>
+        Trade-off Atlas
+      </a>
+      <div class="site-nav">
+        <button class="theme-toggle" type="button" aria-label="Toggle theme"></button>
+      </div>
+    </div>
+    <nav class="cat-nav" aria-label="Browse by topic">
+      <div class="wrap">
+        <a href="../index.html">All topics</a>
+        <a class="cat-pm" href="../index.html#pm"><span class="dot"></span>Project management</a>
+        <a class="cat-bc" href="../index.html#bc"><span class="dot"></span>Business communication</a>
+        <a class="cat-sw" href="../index.html#sw"><span class="dot"></span>Software development</a>
+        <a class="cat-de" href="../index.html#de"><span class="dot"></span>Data engineering</a>
+        <a class="cat-ds" href="../index.html#ds"><span class="dot"></span>Data science</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All trade-offs</a> / <a href="../index.html#bc">Business communication</a></nav>
+    <header class="hero">
+      <span class="tag">Business communication</span>
+      <h1>Telling vs. asking</h1>
+      <p class="lede">Telling is fast and makes your view clear, but you learn nothing. Asking brings in information and builds buy-in, but too much leaves people unsure what you think. Good conversations mix both.</p>
+      <div class="vs"><span>Telling (advocacy)</span><i>vs.</i><span>Asking (inquiry)</span></div>
+    </header>
+
+    <figure class="anim" id="anim"><noscript><p style="padding:20px">Turn on JavaScript to see the animation.</p></noscript></figure>
+
+    <article class="prose">
+      <section>
+        <h2>The trade-off</h2>
+        <p>In any conversation you spend your turns either <strong>advocating</strong> (stating what you think, what you want, what you know) or <strong>inquiring</strong> (asking what others think, want and know). Chris Argyris and Donald Schön treated these as the two basic moves in how people reason together, and Edgar Schein later argued for <em>humble inquiry</em>: asking questions you don't already know the answer to.</p>
+        <p>Each has costs and gains. Telling is quick and leaves no doubt about your position. It also gathers no new information and can leave others feeling that the decision is already made. Asking brings in what you can't see and gives people a stake in the outcome, but it takes time, and a conversation that is all questions can seem evasive. <strong>Pure telling and pure asking both fail.</strong> The useful skill is to do both on purpose: say what you think and why, then ask what you might be missing.</p>
+      </section>
+      <section>
+        <h2>How to use it</h2>
+        <ol>
+          <li><strong>Notice your default.</strong> Experts and senior people tend to tell, and cautious people tend to ask. Know which way you lean.</li>
+          <li><strong>State your view, then open it up.</strong> "Here's what I think and why. What am I missing?" gives people something concrete to react to.</li>
+          <li><strong>Ask real questions.</strong> A leading question ("don't you think we should...?") is telling in disguise, and people can tell.</li>
+          <li><strong>Shift with the situation.</strong> Tell more when it's urgent and you know the answer. Ask more when the question is open, the stakes are high or others know things you don't.</li>
+        </ol>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <div class="callout">
+          <p>A tech lead reviews a design with "this won't scale, use a queue", and the engineer quietly rewrites it. Next time the lead says, "I'm worried about load spikes here. What happens if traffic triples?" The engineer points out an existing rate limiter the lead hadn't seen. They settle on a simpler fix together, and the engineer owns it.</p>
+        </div>
+      </section>
+      <section>
+        <h2>Watch out for</h2>
+        <ul>
+          <li><strong>Asking is not a free pass.</strong> If you've already decided, say so. Pretending to consult is worse than telling, and people notice.</li>
+          <li><strong>Power distorts the signal.</strong> People tell a boss what the boss seems to want. The more senior you are, the more deliberately you have to ask, and the more you need to react well to what you hear.</li>
+          <li><strong>The curves here are a model.</strong> The 50/50 shape is illustrative. In practice what matters is that both moves are present and sincere, not a ratio.</li>
+          <li>Related: the same balance shows up in <a href="candour-diplomacy.html">candour vs. diplomacy</a>, in group decisions (<a href="speed-consensus.html">speed vs. consensus</a>), and in how much of a decision to hand over (<a href="control-autonomy.html">control vs. autonomy</a>).</li>
+        </ul>
+      </section>
+    </article>
+
+    <nav class="related" id="related" aria-label="Related trade-offs"></nav>
+    <nav class="pager" id="pager" aria-label="More trade-offs"></nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Trade-off Atlas: mental models for better decisions. Models are simplified on purpose. Use them to frame the conversation, not to forecast.</p></div>
+  </footer>
+
+  <script src="../assets/js/catalog.js"></script>
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/engine.js"></script>
+  <script src="../assets/js/anim/tell-ask.js"></script>
+</body>
+</html>

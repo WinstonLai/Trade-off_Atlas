@@ -1,0 +1,30 @@
+<!--meta {"title": "Safety buffers: padding every task vs. pooling one buffer", "cat": "pm", "lede": "Padding each task makes every owner feel safe, but the padding adds up and tends to get used up. Pooling it into one shared buffer protects the same deadline with far fewer days.", "vs": ["Padding inside tasks", "Pooled buffer"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>People estimate tasks with a safety margin, because they get blamed for late work and rarely for early work. Add a margin to ten tasks in a row and the plan commits ten margins. But the tasks don't all overrun together: when many independent tasks are chained, some run long and others run short, and <strong>the variation partly cancels out</strong>. The uncertainty of the whole chain grows roughly with the square root of the number of tasks, not with the number.</p>
+  <p>That is the core of Goldratt's <em>critical chain</em> method: take the padding out of the individual tasks and add one project buffer at the end, sized with something like the square root of the sum of the squared margins. A chain of eight tasks with 5 days of padding each needs about 14 days of buffer, not 40. The price is discipline: people now work to the shorter, unpadded estimate, and the buffer only helps if it is watched and not spent casually.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Ask for typical durations,</strong> not "safe" ones. Keep the margin out of the task and make the shared buffer visible.</li>
+    <li><strong>Size the buffer from the risk,</strong> not as a flat percentage: more tasks, more uncertainty per task, or more dependence between them all call for a bigger one.</li>
+    <li><strong>Track buffer burn, not just task dates.</strong> A task running a day late is fine if the buffer is healthy, and a warning if a lot of it has gone early in the project.</li>
+    <li><strong>Don't punish a task for using its median time.</strong> If late tasks are treated as failures, people go back to padding.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A team plans a release as eight tasks of "10 days" each, which is an 80-day commitment. Interviews show the median is closer to 5 days; the rest is protection. They re-plan with 5-day tasks and a 14-day buffer at the end: 54 days. Over the next quarter the buffer is partly used on two troublesome tasks and the release lands on time, about three weeks earlier than the padded plan would have had it.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>The cancelling-out assumes independence.</strong> If tasks share a cause of delay (the same shaky vendor, the same overloaded person), they overrun together and the buffer must be larger. The model above also assumes that task durations are not skewed.</li>
+    <li><strong>An unguarded buffer evaporates.</strong> Work expands to fill the time available, and people start late because there's slack. Pooling only pays if the pooled time is protected.</li>
+    <li><strong>It is contested.</strong> Critical chain has devoted followers and serious critics, who point out that sizing rules are rules of thumb and that results depend on culture.</li>
+    <li>Related: this is another way that <a href="project-triangle.html">time is traded against cost and scope</a>, and starting many tasks at once eats the buffer fast (<a href="wip-focus.html">limit work in progress</a>).</li>
+  </ul>
+</section>

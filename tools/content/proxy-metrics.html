@@ -1,0 +1,31 @@
+<!--meta {"title": "Proxy metrics vs. the real goal (Goodhart's law)", "cat": "ds", "lede": "We measure what's easy as a stand-in for what we care about. Push hard enough on the stand-in and the two come apart: the number keeps improving while the real result stalls or gets worse.", "vs": ["The metric", "The real goal"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>Most things we care about (customer satisfaction, product quality, learning) can't be measured directly, so we measure a <em>proxy</em>: tickets closed, test coverage, page views, a reward model's score. A proxy is useful because it tracks the goal, so a little pressure on it helps. The trouble is that <strong>the proxy and the goal are never perfectly linked</strong>, and pressure finds the gaps. People (or a learning algorithm) find cheap ways to raise the number that don't raise the real thing.</p>
+  <p>This is <em>Goodhart's law</em>, in Marilyn Strathern's wording: "When a measure becomes a target, it ceases to be a good measure." The shape is a familiar one: with more and more optimisation pressure, the proxy keeps rising while the true outcome rises, peaks and falls. Researchers have measured the same pattern when optimising a language model against a learned reward model (Gao, Schulman and Hilton, 2022). The better the proxy tracks the goal, the further out the peak is, and the more pressure it can take.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Name the real goal beside the metric.</strong> Write down what you actually want, and how someone could hit the number without achieving it.</li>
+    <li><strong>Pair metrics.</strong> Add a counter-metric that would reveal gaming: tickets closed alongside reopen rate, coverage alongside escaped bugs.</li>
+    <li><strong>Use metrics to inform, not to punish,</strong> especially early. The harder you tie rewards to the number, the stronger the pressure.</li>
+    <li><strong>Check the link regularly.</strong> Sample the real outcome directly (read tickets, talk to customers, look at examples) to see whether the metric still means what it did.</li>
+    <li><strong>Stop pushing before the peak.</strong> If the metric's gains get cheaper than they should be, take it as a sign.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A support team is rewarded on tickets closed per day. The number climbs for a month. Then agents start closing tickets as soon as they reply, and splitting one problem into several tickets. Closed tickets are up by half, but repeat contacts have doubled and satisfaction scores are falling. The team adds reopen rate and a weekly review of a sample of tickets, and keeps the closed count as a capacity indicator, not a target.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>The curves here are a model.</strong> The shape (a hump) is the point. The real peak and fall depend on the metric, the people and the incentives, and can't be read off a formula.</li>
+    <li><strong>Gaming isn't always dishonest.</strong> Often people sincerely optimise what they are asked to, and an algorithm has no intent at all. It is the target that is wrong.</li>
+    <li><strong>No metric means no feedback.</strong> The answer is rarely to stop measuring. It is to measure more than one thing and stay close to the real outcome.</li>
+    <li>Related: how hard to supervise is a <a href="control-autonomy.html">control vs. autonomy</a> question, tuning a model to a score echoes <a href="bias-variance.html">bias vs. variance</a>, and which mistakes a metric hides is the theme of <a href="precision-recall.html">precision vs. recall</a>.</li>
+  </ul>
+</section>

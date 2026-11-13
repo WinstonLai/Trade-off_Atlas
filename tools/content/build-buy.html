@@ -1,0 +1,32 @@
+<!--meta {"title": "Build vs. buy", "cat": "sw", "lede": "Buying is cheap to start and keeps costing as your needs and the product drift apart. Building is expensive up front and keeps costing to maintain. Which is cheaper depends on the time horizon, the fit and how reliable your estimate is.", "vs": ["Build", "Buy"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p><strong>Buying</strong> (a product, a service, an open-source component) has low entry cost and gets you running fast. It then charges ongoing fees and, where the product doesn't quite fit, ongoing <em>workarounds</em>: integrations, scripts, manual steps. <strong>Building</strong> is the opposite: a large cost before anything works, and then upkeep, but the result fits exactly and you control it.</p>
+  <p>Plotted over time, the two cost lines start in different places and rise at different rates, so they can cross. Where they cross depends mostly on three things: <strong>how well the product fits</strong> (a poor fit means a steep workaround line), <strong>how long you'll use it</strong> (a short horizon favours buying), and <strong>how far the build overruns</strong>. Most software costs more in upkeep than in the first build, and build estimates tend to be optimistic, which both pull toward buying.</p>
+  <p>Cost isn't the only axis. A useful rule is to <em>buy what's commodity, build what differentiates you</em>. Payroll or email are the same for everyone, while the thing your customers pay you for is not.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Start from the capability,</strong> not the tool. Is it core to what makes you different, or is it context that every company needs?</li>
+    <li><strong>Price the whole life.</strong> Include integration, licences at your future size, workarounds, upkeep and the people who will maintain it.</li>
+    <li><strong>Test the fit before committing.</strong> A short trial against your real cases shows how big the gap is.</li>
+    <li><strong>Add an overrun to the build estimate.</strong> If the answer only works at the optimistic estimate, treat it as a close call.</li>
+    <li><strong>Keep the exit cheap.</strong> Wrap what you buy behind an interface you own, so a later switch (either way) costs less.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A team needs a feature-flag system. A hosted product covers about 90% of their needs for a modest yearly fee and a week of integration. Building it would take a quarter and need an owner afterwards. They buy it. A year later they find their core pricing logic can't be expressed in any product, and they build that part themselves, because it is what differentiates them.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>The numbers are illustrative.</strong> Real break-even points range widely, and vendor-written calculators usually favour the vendor's side.</li>
+    <li><strong>"We'll build it better" is a trap.</strong> It often means a new thing to maintain forever, and the team that built it moves on. This is <a href="technical-debt.html">technical debt</a> taken on by choice.</li>
+    <li><strong>Buying has hidden coupling too.</strong> Pricing changes, missing features and lock-in are risks you don't control.</li>
+    <li>Related: how you split what you build matters as much as whether you build it (<a href="monolith-microservices.html">monolith vs. microservices</a>), and a build that overruns is a <a href="project-triangle.html">project triangle</a> problem.</li>
+  </ul>
+</section>

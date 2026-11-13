@@ -1,0 +1,31 @@
+<!--meta {"title": "Retries: resilience vs. load amplification", "cat": "sw", "lede": "Retrying hides occasional failures from users. But when a backend is already struggling, retries multiply the load on it, and can turn a slowdown into an outage.", "vs": ["Resilience", "Load amplification"]}-->
+<section>
+  <h2>The trade-off</h2>
+  <p>Most failures between services are brief: a dropped connection, a restarted instance, a slow reply. Retrying the call makes these invisible, which is why almost every client library does it. But <strong>every retry is extra traffic</strong>. If each failed call is retried three times, a backend that is failing most requests sees several times its normal load.</p>
+  <p>That is the dangerous part. Overload makes calls fail, failures cause retries, retries add load, and more calls fail, a positive feedback loop. Google's SRE book describes this as one of the ways cascading failures start. So the same setting is good for blips and harmful during a real problem, and <strong>the more it helps in good times, the more it can hurt in bad ones</strong>. The fix is not "no retries" but limited ones: a cap on attempts per request, backoff with random jitter so clients don't retry in sync, and a <em>retry budget</em> that allows retries only while they are a small fraction (the SRE book uses 10% as an example) of total traffic.</p>
+</section>
+<section>
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Retry only what's safe.</strong> Calls that can be repeated without harm (reads, idempotent writes) can be retried. Others need an idempotency key first.</li>
+    <li><strong>Cap and spread them.</strong> A few attempts at most, with exponential backoff and jitter.</li>
+    <li><strong>Add a budget.</strong> Limit retries as a share of traffic per client, so a widespread failure produces a small, bounded extra load.</li>
+    <li><strong>Fail fast when the backend is clearly down.</strong> Circuit breakers and load shedding stop clients from queueing work that can't succeed.</li>
+    <li><strong>Retry at one layer.</strong> If three layers each retry three times, one failure becomes twenty-seven calls.</li>
+  </ol>
+</section>
+<section>
+  <h2>Example</h2>
+  <div class="callout">
+    <p>A service runs at 80% of capacity. A database hiccup makes 30% of calls fail, and every client is set to retry three times. Within seconds the service is receiving nearly three times its capacity, requests start timing out, and the timeouts are retried too. The hiccup lasts a minute; the outage lasts half an hour. After the incident the team adds jittered backoff and a retry budget, and the next hiccup passes unnoticed.</p>
+  </div>
+</section>
+<section>
+  <h2>Watch out for</h2>
+  <ul>
+    <li><strong>The curves here come from a toy model.</strong> The way throughput collapses under overload differs by system, and real failures are rarely this uniform.</li>
+    <li><strong>Retries stack up the call chain.</strong> A retry in the web tier, the API tier and the database client multiply together.</li>
+    <li><strong>A retry can hide a real fault.</strong> Watch the retry rate as a metric. A rising one is an early warning.</li>
+    <li>Related: this is the same cliff as in <a href="utilization-flow.html">utilization vs. flow</a>, where waiting time explodes near full load. It also interacts with <a href="latency-throughput.html">latency vs. throughput</a>, and it is why networked services need to think about <a href="cap-theorem.html">failure as normal</a>.</li>
+  </ul>
+</section>
